@@ -1,0 +1,90 @@
+.suggestion-container {
+  padding: 2.8rem 3.2rem;
+  background-color: white;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.suggestion-container:hover .suggestion-title {
+  color: var(--blue);
+}
+
+.suggestion-upvote {
+  padding: 1.2rem 1.4rem 1rem 1.4rem;
+  background-color: var(--gray);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.suggestion-upvote:hover {
+  background-color: var(--gray-hover);
+}
+
+.upvote-icon {
+  stroke: var(--blue);
+}
+
+.upvote-amount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.9rem;
+  text-align: center;
+  letter-spacing: -0.18px;
+  color: var(--navy);
+}
+
+.suggestion-text-box {
+  width: 75%;
+}
+
+.suggestion-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.6rem;
+  letter-spacing: -0.25px;
+  color: var(--navy);
+}
+
+.suggestion-description {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2.3rem;
+  color: var(--gray-dark);
+  margin: 0.5rem 0 1.2rem 0;
+}
+
+.suggestion-category {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  color: var(--blue);
+  padding: 0.5rem 1.5rem;
+  background-color: var(--gray);
+  border-radius: 1rem;
+}
+
+.suggestion-comments {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comment-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 2.3rem;
+  letter-spacing: -0.22px;
+  color: var(--navy);
+}

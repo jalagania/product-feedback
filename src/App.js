@@ -1,10 +1,14 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar";
+import SuggestionsPage from "./components/SuggestionsPage";
 
 function App() {
   return (
     <div className="container">
-      <Sidebar />
+      <div className="suggestions-page-wrapper">
+        <Sidebar />
+        <SuggestionsPage />
+      </div>
     </div>
   );
 }
