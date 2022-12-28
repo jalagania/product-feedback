@@ -1,0 +1,133 @@
+.sidebar-box {
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.sidebar-box > div {
+  padding: 2.4rem;
+  border-radius: 1rem;
+}
+
+.logo-box {
+  background-image: radial-gradient(
+    128.88% 128.88% at 103.9% -10.39%,
+    #e84d70 0%,
+    #a337f6 53.09%,
+    #28a7ed 100%
+  );
+}
+
+.logo-text {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  letter-spacing: -0.25px;
+  margin-top: 4rem;
+  color: white;
+}
+
+.logo-subtext {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.keywords-box {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.keyword {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  color: var(--blue);
+  padding: 0.5rem 1.5rem;
+  background-color: var(--gray);
+  border-radius: 1rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.keyword:hover {
+  background-color: var(--gray-hover);
+}
+
+.roadmap-box {
+  background-color: white;
+}
+
+.roadmap-title-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.6rem;
+  letter-spacing: -0.25px;
+  color: var(--navy);
+}
+
+.view {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-decoration: underline;
+  color: var(--blue);
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view:hover {
+  color: var(--blue-hover);
+}
+
+.roadmap-list {
+  margin-top: 2.5rem;
+}
+
+.roadmap-list li {
+  color: var(--gray-dark);
+  line-height: 3rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.roadmap-list li::before {
+  content: "";
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+}
+
+.planned::before {
+  background-color: var(--orange);
+}
+
+.progress::before {
+  background-color: var(--violet);
+}
+
+.live::before {
+  background-color: var(--blue-light);
+}
+
+.item-name {
+  font-size: 1.6rem;
+}
+
+.item-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-left: auto;
+}
