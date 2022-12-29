@@ -1,11 +1,29 @@
 import "./SuggestionsPage.css";
+import { useEffect } from "react";
 import AddFeedback from "./AddFeedback";
 import Suggestion from "./Suggestion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function SuggestionsPage() {
-  const { appData } = useSelector((store) => store.data);
-  const { filteredData } = useSelector((store) => store.sidebar);
+  const dispatch = useDispatch();
+  const { toggleSortMenu, setSortCategory, sortSuggestions } =
+    suggestionsPageSlice.actions;
+  const { filteredData, keyword, showSortMenu, sortCategory } = useSelector(
+    (store) => store.suggestionsPage
+  );
+
+  function handleSortButton() {
+    dispatch(toggleSortMenu());
+  }
+
+  function handleSortCategory(event) {
+    dispatch(setSortCategory(event.target.textContent));
+  }
+
+  useEffect(() => {
+    dispatch(sortSuggestions());
+  }, [keyword, sortCategory]);
 
   return (
     <div className="suggestions-page">
@@ -19,13 +37,18 @@ function SuggestionsPage() {
             alt="bulb"
             className="bulb-icon"
           />
-          <span className="suggestion-amount">6</span>
+          <span className="suggestion-amount">{filteredData.length}</span>
           <span className="suggestion-text">Suggestions</span>
         </div>
-        <button className="sort-box">
+        <button className="sort-box" onClick={handleSortButton}>
           <span className="sort-text">Sort by :</span>
-          <span className="sort-category">Most Upvotes</span>
-          <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
+          <span className="sort-category">{sortCategory}</span>
+          <svg
+            className={showSortMenu ? "rotate" : ""}
+            width="10"
+            height="7"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M1 1l4 4 4-4"
               strokeWidth="2"
@@ -34,10 +57,44 @@ function SuggestionsPage() {
             />
           </svg>
         </button>
+        <ul className={`sort-menu ${showSortMenu ? "" : "hidden"}`}>
+          <li onClick={handleSortCategory}>
+            <p>Most Upvotes</p>
+            <img
+              className={sortCategory === "Most Upvotes" ? "" : "hidden"}
+              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
+              alt="check"
+            />
+          </li>
+          <li onClick={handleSortCategory}>
+            <p>Least Upvotes</p>
+            <img
+              className={sortCategory === "Least Upvotes" ? "" : "hidden"}
+              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
+              alt="check"
+            />
+          </li>
+          <li onClick={handleSortCategory}>
+            <p>Most Comments</p>
+            <img
+              className={sortCategory === "Most Comments" ? "" : "hidden"}
+              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
+              alt="check"
+            />
+          </li>
+          <li onClick={handleSortCategory}>
+            <p>Least Comments</p>
+            <img
+              className={sortCategory === "Least Comments" ? "" : "hidden"}
+              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
+              alt="check"
+            />
+          </li>
+        </ul>
         <AddFeedback />
       </header>
       <div className="suggestions-container">
-        {appData.productRequests.length > 0 &&
+        {filteredData.length > 0 &&
           filteredData.map((request) => {
             return (
               <Suggestion
@@ -50,7 +107,7 @@ function SuggestionsPage() {
               />
             );
           })}
-        {appData.productRequests.length === 0 && (
+        {filteredData.length === 0 && (
           <div className="no-feedback-box">
             <img
               src={

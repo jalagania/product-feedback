@@ -1,7 +1,7 @@
 import "./Suggestion.css";
 
 function Suggestion(props) {
-  function handleUpvote(event) {
+  function handleUpvote() {
     console.log("voted");
   }
 

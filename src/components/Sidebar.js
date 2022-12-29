@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import sidebarSlice from "../store/sidebarSlice";
 import "./Sidebar.css";
+import { useDispatch, useSelector } from "react-redux";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function Sidebar() {
-  const [keyword, setKeyword] = useState("All");
   const dispatch = useDispatch();
-  const { filterSuggestions } = sidebarSlice.actions;
-  const { appData } = useSelector((store) => store.data);
+  const { filterSuggestions, setKeyword } = suggestionsPageSlice.actions;
+  const { appData, keyword } = useSelector((store) => store.suggestionsPage);
 
   const planned = appData.productRequests.filter(
     (request) => request.status === "planned"
@@ -20,8 +18,8 @@ function Sidebar() {
   ).length;
 
   function handleKeyword(event) {
-    dispatch(filterSuggestions([event.target.textContent, appData]));
-    setKeyword(event.target.textContent);
+    dispatch(filterSuggestions(event.target.textContent));
+    dispatch(setKeyword(event.target.textContent));
   }
 
   return (

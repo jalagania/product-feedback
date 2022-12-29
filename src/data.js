@@ -188,6 +188,7 @@ export const data = {
       status: "suggestion",
       description:
         "Challenge preview images are missing when you apply a filter.",
+      comments: [],
     },
     {
       id: 7,
@@ -290,6 +291,7 @@ export const data = {
       status: "in-progress",
       description:
         "Screenshots of solutions with animations don’t display correctly.",
+      comments: [],
     },
     {
       id: 12,

@@ -61,3 +61,11 @@ a:visited {
   color: inherit;
   text-decoration: none;
 }
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.hidden {
+  display: none;
+}

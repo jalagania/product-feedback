@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataSlice from "./dataSlice";
-import sidebarSlice from "./sidebarSlice";
+import suggestionsPageSlice from "./suggestionsPageSlice";
 
 export const store = configureStore({
   reducer: {
-    data: dataSlice.reducer,
-    sidebar: sidebarSlice.reducer,
+    suggestionsPage: suggestionsPageSlice.reducer,
   },
 });
