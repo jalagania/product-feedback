@@ -1,11 +1,14 @@
 import "./Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
+import dataSlice from "../store/dataSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function Sidebar() {
   const dispatch = useDispatch();
-  const { filterSuggestions, setKeyword } = suggestionsPageSlice.actions;
-  const { appData, keyword } = useSelector((store) => store.suggestionsPage);
+  const { appData } = useSelector((store) => store.data);
+  const { filterData } = dataSlice.actions;
+  const { setKeyword } = suggestionsPageSlice.actions;
+  const { keyword } = useSelector((store) => store.suggestionsPage);
 
   const planned = appData.productRequests.filter(
     (request) => request.status === "planned"
@@ -18,7 +21,7 @@ function Sidebar() {
   ).length;
 
   function handleKeyword(event) {
-    dispatch(filterSuggestions(event.target.textContent));
+    dispatch(filterData(event.target.textContent));
     dispatch(setKeyword(event.target.textContent));
   }
 

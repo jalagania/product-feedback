@@ -1,13 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
+import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import "./Suggestion.css";
 
 function Suggestion(props) {
+  const dispatch = useDispatch();
+  const { hideSuggestionsPage } = suggestionsPageSlice.actions;
+  const { suggestionsPageVisible } = useSelector(
+    (store) => store.suggestionsPage
+  );
+  const { showSuggestionDetailsPage, getSuggestionDetailsID } =
+    suggestionDetailsSlice.actions;
+
+  const comments = props.comments.length;
+  const replies = props.comments.reduce((sum, comment) => {
+    if (comment.replies) {
+      return sum + comment.replies.length;
+    }
+    return sum;
+  }, 0);
+  const commentAmount = comments + replies;
+
   function handleUpvote() {
     console.log("voted");
   }
 
   function handleSuggestionBox(event) {
-    if (!event.target.closest(".suggestion-upvote")) {
-      console.log("I am a box");
+    if (suggestionsPageVisible && !event.target.closest(".suggestion-upvote")) {
+      dispatch(getSuggestionDetailsID(props.id));
+      dispatch(hideSuggestionsPage());
+      dispatch(showSuggestionDetailsPage());
     }
   }
 
@@ -39,7 +61,7 @@ function Suggestion(props) {
           src={process.env.PUBLIC_URL + "/assets/shared/icon-comments.svg"}
           alt="comment"
         />
-        <span className="comment-amount">{props.comments?.length}</span>
+        <span className="comment-amount">{commentAmount}</span>
       </div>
     </div>
   );

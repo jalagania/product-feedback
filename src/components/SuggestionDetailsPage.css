@@ -1,0 +1,63 @@
+.suggestion-details-container {
+  max-width: 73rem;
+  margin: 0 auto;
+}
+
+.buttons-box {
+  margin-bottom: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-go-back,
+.btn-edit-feedback {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  cursor: pointer;
+}
+
+.btn-go-back {
+  color: var(--gray-dark);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-go-back:hover span {
+  text-decoration: underline;
+}
+
+.btn-edit-feedback {
+  padding: 1.2rem 2.5rem;
+  color: var(--gray);
+  background-color: var(--blue);
+  border-radius: 1rem;
+  transition: all 0.2s;
+}
+
+.btn-edit-feedback:hover {
+  background-color: var(--blue-hover);
+}
+
+.btn-edit-feedback:active {
+  scale: 0.98;
+}
+
+.comments-box {
+  margin-top: 2.4rem;
+  padding: 2.4rem 3.2rem 4.8rem 3.2rem;
+  background-color: white;
+  border-radius: 1rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.6rem;
+  letter-spacing: -0.25px;
+  color: var(--navy);
+}

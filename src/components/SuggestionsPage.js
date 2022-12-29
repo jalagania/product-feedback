@@ -1,15 +1,17 @@
 import "./SuggestionsPage.css";
 import { useEffect } from "react";
-import AddFeedback from "./AddFeedback";
+import AddFeedbackButton from "./AddFeedbackButton";
 import Suggestion from "./Suggestion";
 import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
+import dataSlice from "../store/dataSlice";
 
 function SuggestionsPage() {
   const dispatch = useDispatch();
-  const { toggleSortMenu, setSortCategory, sortSuggestions } =
-    suggestionsPageSlice.actions;
-  const { filteredData, keyword, showSortMenu, sortCategory } = useSelector(
+  const { sortData } = dataSlice.actions;
+  const { filteredData } = useSelector((store) => store.data);
+  const { toggleSortMenu, setSortCategory } = suggestionsPageSlice.actions;
+  const { keyword, showSortMenu, sortCategory } = useSelector(
     (store) => store.suggestionsPage
   );
 
@@ -22,7 +24,7 @@ function SuggestionsPage() {
   }
 
   useEffect(() => {
-    dispatch(sortSuggestions());
+    dispatch(sortData(sortCategory));
   }, [keyword, sortCategory]);
 
   return (
@@ -91,7 +93,7 @@ function SuggestionsPage() {
             />
           </li>
         </ul>
-        <AddFeedback />
+        <AddFeedbackButton />
       </header>
       <div className="suggestions-container">
         {filteredData.length > 0 &&
@@ -99,6 +101,7 @@ function SuggestionsPage() {
             return (
               <Suggestion
                 key={request.id}
+                id={request.id}
                 upvotes={request.upvotes}
                 title={request.title}
                 description={request.description}
@@ -121,7 +124,7 @@ function SuggestionsPage() {
               Got a suggestion? Found a bug that needs to be squashed? We love
               hearing about new ideas to improve our app.
             </p>
-            <AddFeedback />
+            <AddFeedbackButton />
           </div>
         )}
       </div>
