@@ -1,15 +1,16 @@
-.suggestion-container {
+.suggestion-box {
   padding: 2.8rem 3.2rem;
   background-color: white;
   border-radius: 1rem;
-  cursor: pointer;
 
   display: flex;
   align-items: center;
   gap: 4rem;
 }
-
-.suggestion-container:hover .suggestion-title {
+.suggestion-box.hover {
+  cursor: pointer;
+}
+.suggestion-box.hover:hover .suggestion-title {
   color: var(--blue);
 }
 

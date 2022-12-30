@@ -34,7 +34,10 @@ function Suggestion(props) {
   }
 
   return (
-    <div className="suggestion-container" onClick={handleSuggestionBox}>
+    <div
+      className={`suggestion-box ${props.class ? "hover" : ""}`}
+      onClick={handleSuggestionBox}
+    >
       <button className="suggestion-upvote" onClick={handleUpvote}>
         <svg
           className="upvote-icon"

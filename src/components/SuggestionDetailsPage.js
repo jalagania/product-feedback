@@ -1,6 +1,7 @@
 import "./SuggestionDetailsPage.css";
 import Suggestion from "./Suggestion";
 import { useSelector } from "react-redux";
+import Reply from "./Reply";
 
 function SuggestionDetailsPage() {
   const { suggestionID } = useSelector((store) => store.suggestionDetails);
@@ -9,6 +10,7 @@ function SuggestionDetailsPage() {
       (request) => request.id === suggestionID
     )
   );
+  const commentAmount = suggestion.comments.length;
 
   return (
     <div className="suggestion-details-container">
@@ -29,12 +31,30 @@ function SuggestionDetailsPage() {
         category={suggestion.category}
         comments={suggestion.comments}
       />
-      <div className="comments-box">
-        <h3>
-          <span>4</span>
-          <span> Comments</span>
-        </h3>
-      </div>
+      {suggestion.comments.length > 0 && (
+        <div className="comments-container">
+          <h3>
+            <span>{commentAmount}</span>
+            <span> Comments</span>
+          </h3>
+          {suggestion.comments.map((comment) => {
+            return <Reply key={comment.id} comment={comment} />;
+          })}
+        </div>
+      )}
+      <form className="add-comment-box">
+        <h3>Add Comment</h3>
+        <textarea
+          className="comment-input"
+          placeholder="Type your comment here"
+        ></textarea>
+        <div className="button-box">
+          <p className="characters-amount">
+            <span className="amount">250 </span> Characters left
+          </p>
+          <button className="btn-post-comment">Post Comment</button>
+        </div>
+      </form>
     </div>
   );
 }

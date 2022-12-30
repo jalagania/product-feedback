@@ -102,6 +102,7 @@ function SuggestionsPage() {
               <Suggestion
                 key={request.id}
                 id={request.id}
+                class="hover"
                 upvotes={request.upvotes}
                 title={request.title}
                 description={request.description}
