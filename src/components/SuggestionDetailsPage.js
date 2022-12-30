@@ -1,21 +1,39 @@
 import "./SuggestionDetailsPage.css";
 import Suggestion from "./Suggestion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Reply from "./Reply";
+import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function SuggestionDetailsPage() {
+  const dispatch = useDispatch();
   const { suggestionID } = useSelector((store) => store.suggestionDetails);
   const suggestion = useSelector((store) =>
     store.data.appData.productRequests.find(
       (request) => request.id === suggestionID
     )
   );
-  const commentAmount = suggestion.comments.length;
+  const { hideSuggestionDetailsPage } = suggestionDetailsSlice.actions;
+  const { showSuggestionsPage } = suggestionsPageSlice.actions;
+
+  const comments = suggestion.comments.length;
+  const replies = suggestion.comments.reduce((sum, comment) => {
+    if (comment.replies) {
+      return sum + comment.replies.length;
+    }
+    return sum;
+  }, 0);
+  const commentAmount = comments + replies;
+
+  function handleGoBack() {
+    dispatch(hideSuggestionDetailsPage());
+    dispatch(showSuggestionsPage());
+  }
 
   return (
     <div className="suggestion-details-container">
       <div className="buttons-box">
-        <button className="btn-go-back">
+        <button className="btn-go-back" onClick={handleGoBack}>
           <img
             src={process.env.PUBLIC_URL + "/assets/shared/icon-arrow-left.svg"}
             alt="left arrow"
