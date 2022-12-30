@@ -1,0 +1,14 @@
+.btn-go-back {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  color: var(--gray-dark);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-go-back:hover span {
+  text-decoration: underline;
+}

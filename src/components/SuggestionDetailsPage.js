@@ -1,11 +1,17 @@
 import "./SuggestionDetailsPage.css";
+import { useState } from "react";
 import Suggestion from "./Suggestion";
 import { useDispatch, useSelector } from "react-redux";
-import Reply from "./Reply";
+import Comment from "./Comment";
 import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
+import ButtonGoBack from "./ButtonGoBack";
+import ButtonWithBackground from "./ButtonWithBackground";
 
 function SuggestionDetailsPage() {
+  const [commentInput, setCommentInput] = useState("");
+  const [charactersLeft, setCharactersLeft] = useState(250);
+
   const dispatch = useDispatch();
   const { suggestionID } = useSelector((store) => store.suggestionDetails);
   const suggestion = useSelector((store) =>
@@ -30,17 +36,32 @@ function SuggestionDetailsPage() {
     dispatch(showSuggestionsPage());
   }
 
+  function handleEditFeedback() {
+    console.log("edit feedback");
+  }
+
+  function handleCommentInput(event) {
+    if (event.target.value.length <= 250) {
+      setCommentInput(event.target.value);
+      setCharactersLeft(250 - event.target.value.length);
+    }
+  }
+
+  function handleCommentSubmit(event) {
+    event.preventDefault();
+    setCommentInput("");
+    console.log("submit comment");
+  }
+
   return (
     <div className="suggestion-details-container">
       <div className="buttons-box">
-        <button className="btn-go-back" onClick={handleGoBack}>
-          <img
-            src={process.env.PUBLIC_URL + "/assets/shared/icon-arrow-left.svg"}
-            alt="left arrow"
-          />
-          <span>Go Back</span>
-        </button>
-        <button className="btn-edit-feedback">Edit Feedback</button>
+        <ButtonGoBack handleGoBack={handleGoBack} />
+        <ButtonWithBackground
+          name="Edit Feedback"
+          class="edit-feedback"
+          handleButton={handleEditFeedback}
+        />
       </div>
       <Suggestion
         upvotes={suggestion.upvotes}
@@ -56,21 +77,34 @@ function SuggestionDetailsPage() {
             <span> Comments</span>
           </h3>
           {suggestion.comments.map((comment) => {
-            return <Reply key={comment.id} comment={comment} />;
+            return (
+              <div key={comment.id}>
+                <Comment comment={comment} />
+                {comment.replies?.map((reply, index) => {
+                  return <Comment key={index} comment={reply} class="reply" />;
+                })}
+              </div>
+            );
           })}
         </div>
       )}
-      <form className="add-comment-box">
+      <form className="add-comment-box" onSubmit={handleCommentSubmit}>
         <h3>Add Comment</h3>
         <textarea
           className="comment-input"
           placeholder="Type your comment here"
+          value={commentInput}
+          onChange={handleCommentInput}
         ></textarea>
         <div className="button-box">
           <p className="characters-amount">
-            <span className="amount">250 </span> Characters left
+            <span className="amount">{charactersLeft} </span> Characters left
           </p>
-          <button className="btn-post-comment">Post Comment</button>
+          <ButtonWithBackground
+            name="Post Comment"
+            class="post-comment"
+            handleButton={handleCommentSubmit}
+          />
         </div>
       </form>
     </div>

@@ -1,0 +1,50 @@
+.btn {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  padding: 1.2rem 2.5rem;
+  border-radius: 1rem;
+  transition: all 0.2s;
+}
+
+.btn:active {
+  scale: 0.98;
+}
+
+.add-feedback {
+  color: white;
+  background-color: var(--violet);
+}
+
+.add-feedback:hover {
+  background-color: var(--violet-hover);
+}
+
+.edit-feedback {
+  color: var(--gray);
+  background-color: var(--blue);
+}
+
+.edit-feedback:hover {
+  background-color: var(--blue-hover);
+}
+
+.post-comment {
+  color: white;
+  background-color: var(--violet);
+}
+
+.post-comment:hover {
+  background-color: var(--violet-hover);
+}
+
+.post-reply {
+  color: white;
+  background-color: var(--violet);
+
+  flex-shrink: 0;
+}
+
+.post-reply:hover {
+  background-color: var(--violet-hover);
+}

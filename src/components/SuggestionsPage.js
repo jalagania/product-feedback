@@ -1,10 +1,10 @@
 import "./SuggestionsPage.css";
 import { useEffect } from "react";
-import AddFeedbackButton from "./AddFeedbackButton";
 import Suggestion from "./Suggestion";
 import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import dataSlice from "../store/dataSlice";
+import ButtonWithBackground from "./ButtonWithBackground";
 
 function SuggestionsPage() {
   const dispatch = useDispatch();
@@ -21,6 +21,10 @@ function SuggestionsPage() {
 
   function handleSortCategory(event) {
     dispatch(setSortCategory(event.target.textContent));
+  }
+
+  function handleAddFeedback() {
+    console.log("add feedback");
   }
 
   useEffect(() => {
@@ -93,7 +97,11 @@ function SuggestionsPage() {
             />
           </li>
         </ul>
-        <AddFeedbackButton />
+        <ButtonWithBackground
+          name="Add Feedback"
+          class="add-feedback"
+          handleButton={handleAddFeedback}
+        />
       </header>
       <div className="suggestions-container">
         {filteredData.length > 0 &&
@@ -125,7 +133,11 @@ function SuggestionsPage() {
               Got a suggestion? Found a bug that needs to be squashed? We love
               hearing about new ideas to improve our app.
             </p>
-            <AddFeedbackButton />
+            <ButtonWithBackground
+              name="Add Feedback"
+              class="add-feedback"
+              handleButton={handleAddFeedback}
+            />
           </div>
         )}
       </div>
