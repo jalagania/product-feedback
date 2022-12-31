@@ -18,6 +18,13 @@ function SuggestionsPage() {
   );
   const { showAddFeedbackPage } = addFeedbackSlice.actions;
 
+  const sotrItems = [
+    "Most Upvotes",
+    "Least Upvotes",
+    "Most Comments",
+    "Least Comments",
+  ];
+
   function handleSortButton() {
     dispatch(toggleSortMenu());
   }
@@ -68,38 +75,22 @@ function SuggestionsPage() {
           </svg>
         </button>
         <ul className={`sort-menu ${showSortMenu ? "" : "hidden"}`}>
-          <li onClick={handleSortCategory}>
-            <p>Most Upvotes</p>
-            <img
-              className={sortCategory === "Most Upvotes" ? "" : "hidden"}
-              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
-              alt="check"
-            />
-          </li>
-          <li onClick={handleSortCategory}>
-            <p>Least Upvotes</p>
-            <img
-              className={sortCategory === "Least Upvotes" ? "" : "hidden"}
-              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
-              alt="check"
-            />
-          </li>
-          <li onClick={handleSortCategory}>
-            <p>Most Comments</p>
-            <img
-              className={sortCategory === "Most Comments" ? "" : "hidden"}
-              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
-              alt="check"
-            />
-          </li>
-          <li onClick={handleSortCategory}>
-            <p>Least Comments</p>
-            <img
-              className={sortCategory === "Least Comments" ? "" : "hidden"}
-              src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
-              alt="check"
-            />
-          </li>
+          {sotrItems.map((item, index) => {
+            return (
+              <li
+                className="menu-item"
+                key={index}
+                onClick={handleSortCategory}
+              >
+                <p>{item}</p>
+                <img
+                  className={sortCategory === item ? "" : "hidden"}
+                  src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
+                  alt="check"
+                />
+              </li>
+            );
+          })}
         </ul>
         <ButtonWithBackground
           name="+ Add Feedback"

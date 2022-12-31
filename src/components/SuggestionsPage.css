@@ -98,6 +98,14 @@ header {
   border-bottom: 1px solid rgba(58, 67, 116, 0.15);
 }
 
+.sort-menu li:hover {
+  color: var(--violet);
+}
+
+.menu-item img {
+  pointer-events: none;
+}
+
 .no-feedback-box {
   height: 45rem;
   background-color: white;
