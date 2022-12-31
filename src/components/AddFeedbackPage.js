@@ -8,7 +8,7 @@ function AddFeedbackPage() {
   }
 
   return (
-    <div className="create-feedback-container">
+    <div className="add-feedback-container">
       <ButtonGoBack handleGoBack={handleGoBack} />
       <AddEditFeedback name="new" />
     </div>

@@ -11,12 +11,10 @@ const suggestionsPageSlice = createSlice({
   reducers: {
     showSuggestionsPage: (state) => {
       state.suggestionsPageVisible = true;
-      document.body.scrollIntoView();
     },
 
     hideSuggestionsPage: (state) => {
       state.suggestionsPageVisible = false;
-      document.body.scrollIntoView();
     },
 
     setKeyword: (state, action) => {

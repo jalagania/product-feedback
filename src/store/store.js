@@ -3,6 +3,7 @@ import dataSlice from "./dataSlice";
 import suggestionsPageSlice from "./suggestionsPageSlice";
 import suggestionDetailsSlice from "./suggestionDetailsSlice";
 import addFeedbackSlice from "./addFeedbackSlice";
+import editFeedbackSlice from "./editFeedbackSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     suggestionsPage: suggestionsPageSlice.reducer,
     suggestionDetails: suggestionDetailsSlice.reducer,
     addFeedbackPage: addFeedbackSlice.reducer,
+    editFeedbackPage: editFeedbackSlice.reducer,
   },
 });

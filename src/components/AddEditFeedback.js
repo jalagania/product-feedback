@@ -1,15 +1,34 @@
 import "./AddEditFeedback.css";
 import { useState } from "react";
 import ButtonWithBackground from "./ButtonWithBackground";
+import { useSelector } from "react-redux";
 
 function AddEditFeedback(props) {
+  const { suggestionID } = useSelector((store) => store.suggestionDetails);
+  const suggestion = useSelector((store) =>
+    store.data.appData.productRequests.find(
+      (request) => request.id === suggestionID
+    )
+  );
+
   const categories = ["Feature", "UI", "UX", "Enhancement", "Bug"];
   const statusItems = ["Suggestion", "Planned", "In-Progress", "Live"];
-  const [title, setTitle] = useState("");
-  const [comment, setComment] = useState("");
-  const [category, setCategory] = useState("Feature");
+  const [title, setTitle] = useState(
+    props.name === "new" ? "" : suggestion.title
+  );
+  const [comment, setComment] = useState(
+    props.name === "new" ? "" : suggestion.description
+  );
+  const [category, setCategory] = useState(
+    props.name === "new"
+      ? "Feature"
+      : suggestion.category.slice(0, 1).toUpperCase() +
+          suggestion.category.slice(1)
+  );
   const [showCategories, setShowCategories] = useState(false);
-  const [status, setStatus] = useState("Cock");
+  const [status, setStatus] = useState(
+    suggestion.status.slice(0, 1).toUpperCase() + suggestion.status.slice(1)
+  );
   const [showStatusMenu, setShowStatusMenu] = useState(false);
 
   function handleTitleChange(event) {
@@ -43,8 +62,17 @@ function AddEditFeedback(props) {
   }
 
   function handleButton(event) {
-    if (event.target.textContent === "Cancel") {
+    if (event.target.textContent === "Delete") {
       // blabla
+    }
+
+    if (event.target.textContent === "Cancel") {
+      if (props.name === "new") {
+        // blabla
+        resetAll();
+      } else {
+        // blabla
+      }
     }
 
     if (event.target.textContent === "Add Feedback") {
@@ -54,7 +82,14 @@ function AddEditFeedback(props) {
         comment: comment,
       };
     }
-    resetAll();
+
+    if (event.target.textContent === "Save Changes") {
+      const newFeedback = {
+        title: title,
+        category: category,
+        comment: comment,
+      };
+    }
   }
 
   function resetAll() {
@@ -76,7 +111,7 @@ function AddEditFeedback(props) {
       {props.name === "new" ? (
         <h1>Create New Feedback</h1>
       ) : (
-        <h1>Editing ''</h1>
+        <h1>Editing '{suggestion.title}'</h1>
       )}
       <h4>Feedback Title</h4>
       <p className="instruction-text">Add a short, descriptive headline</p>

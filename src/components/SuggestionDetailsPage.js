@@ -7,6 +7,7 @@ import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import ButtonGoBack from "./ButtonGoBack";
 import ButtonWithBackground from "./ButtonWithBackground";
+import editFeedbackSlice from "../store/editFeedbackSlice";
 
 function SuggestionDetailsPage() {
   const [commentInput, setCommentInput] = useState("");
@@ -19,8 +20,10 @@ function SuggestionDetailsPage() {
       (request) => request.id === suggestionID
     )
   );
+
   const { hideSuggestionDetailsPage } = suggestionDetailsSlice.actions;
   const { showSuggestionsPage } = suggestionsPageSlice.actions;
+  const { showEditFeedbackPage } = editFeedbackSlice.actions;
 
   const comments = suggestion.comments.length;
   const replies = suggestion.comments.reduce((sum, comment) => {
@@ -37,7 +40,8 @@ function SuggestionDetailsPage() {
   }
 
   function handleEditFeedback() {
-    console.log("edit feedback");
+    dispatch(hideSuggestionDetailsPage());
+    dispatch(showEditFeedbackPage());
   }
 
   function handleCommentInput(event) {
