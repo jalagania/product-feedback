@@ -3,10 +3,14 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import SuggestionsPage from "./components/SuggestionsPage";
 import SuggestionDetailsPage from "./components/SuggestionDetailsPage";
+import AddFeedbackPage from "./components/AddFeedbackPage";
 
 function App() {
   const { suggestionsPageVisible } = useSelector(
     (store) => store.suggestionsPage
+  );
+  const { addFeedbackPageVisible } = useSelector(
+    (store) => store.addFeedbackPage
   );
   const { suggestionDetailsPageVisible } = useSelector(
     (store) => store.suggestionDetails
@@ -20,6 +24,7 @@ function App() {
           <SuggestionsPage />
         </div>
       )}
+      {addFeedbackPageVisible && <AddFeedbackPage />}
       {suggestionDetailsPageVisible && <SuggestionDetailsPage />}
     </div>
   );

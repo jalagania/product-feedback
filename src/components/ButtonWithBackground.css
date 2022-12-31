@@ -4,7 +4,7 @@
   line-height: 2rem;
   padding: 1.2rem 2.5rem;
   border-radius: 1rem;
-  transition: all 0.2s;
+  transition: background-color 0.2s;
 }
 
 .btn:active {
@@ -38,13 +38,24 @@
   background-color: var(--violet-hover);
 }
 
-.post-reply {
+.post-reply,
+.add-feedback {
   color: white;
   background-color: var(--violet);
 
   flex-shrink: 0;
 }
 
-.post-reply:hover {
+.post-reply:hover,
+.add-feedback:hover {
   background-color: var(--violet-hover);
+}
+
+.cancel {
+  color: white;
+  background-color: var(--navy);
+}
+
+.cancel:hover {
+  background-color: var(--navy-hover);
 }

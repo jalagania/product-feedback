@@ -5,15 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import dataSlice from "../store/dataSlice";
 import ButtonWithBackground from "./ButtonWithBackground";
+import addFeedbackSlice from "../store/addFeedbackSlice";
 
 function SuggestionsPage() {
   const dispatch = useDispatch();
   const { sortData } = dataSlice.actions;
   const { filteredData } = useSelector((store) => store.data);
-  const { toggleSortMenu, setSortCategory } = suggestionsPageSlice.actions;
+  const { hideSuggestionsPage, toggleSortMenu, setSortCategory } =
+    suggestionsPageSlice.actions;
   const { keyword, showSortMenu, sortCategory } = useSelector(
     (store) => store.suggestionsPage
   );
+  const { showAddFeedbackPage } = addFeedbackSlice.actions;
 
   function handleSortButton() {
     dispatch(toggleSortMenu());
@@ -24,7 +27,8 @@ function SuggestionsPage() {
   }
 
   function handleAddFeedback() {
-    console.log("add feedback");
+    dispatch(hideSuggestionsPage());
+    dispatch(showAddFeedbackPage());
   }
 
   useEffect(() => {
@@ -98,7 +102,7 @@ function SuggestionsPage() {
           </li>
         </ul>
         <ButtonWithBackground
-          name="Add Feedback"
+          name="+ Add Feedback"
           class="add-feedback"
           handleButton={handleAddFeedback}
         />
@@ -134,7 +138,7 @@ function SuggestionsPage() {
               hearing about new ideas to improve our app.
             </p>
             <ButtonWithBackground
-              name="Add Feedback"
+              name="+ Add Feedback"
               class="add-feedback"
               handleButton={handleAddFeedback}
             />
