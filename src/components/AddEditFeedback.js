@@ -155,7 +155,11 @@ function AddEditFeedback(props) {
               >
                 <p>{item}</p>
                 <img
-                  className={category === item ? "" : "hidden"}
+                  className={
+                    category.toLowerCase() === item.toLowerCase()
+                      ? ""
+                      : "hidden"
+                  }
                   src={process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"}
                   alt="check"
                 />
@@ -189,7 +193,11 @@ function AddEditFeedback(props) {
                   >
                     <p>{item}</p>
                     <img
-                      className={status === item ? "" : "hidden"}
+                      className={
+                        status.toLowerCase() === item.toLowerCase()
+                          ? ""
+                          : "hidden"
+                      }
                       src={
                         process.env.PUBLIC_URL + "/assets/shared/icon-check.svg"
                       }
