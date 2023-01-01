@@ -3,15 +3,50 @@
   background-color: white;
   border-radius: 1rem;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 4rem 1fr 4rem;
   align-items: center;
   gap: 4rem;
 }
+
 .suggestion-box.hover {
   cursor: pointer;
 }
+
 .suggestion-box.hover:hover .suggestion-title {
   color: var(--blue);
+}
+
+.suggestion-box.roadmap {
+  border-radius: 0.5rem;
+  gap: 0;
+  row-gap: 1.6rem;
+}
+
+.planned-box .suggestion-box.roadmap {
+  border-top: 0.5rem solid var(--orange);
+}
+
+.in-progress-box .suggestion-box.roadmap {
+  border-top: 0.5rem solid var(--violet);
+}
+
+.live-box .suggestion-box.roadmap {
+  border-top: 0.5rem solid var(--blue-light);
+}
+
+.suggestion-box.roadmap .suggestion-text-box {
+  grid-column: 1/-1;
+}
+
+.suggestion-box.roadmap .suggestion-upvote {
+  width: 7rem;
+  flex-direction: row;
+  grid-row: 2;
+}
+
+.suggestion-box.roadmap .suggestion-comments {
+  grid-column: 3;
 }
 
 .suggestion-upvote {
@@ -45,8 +80,22 @@
   color: var(--navy);
 }
 
-.suggestion-text-box {
-  width: 75%;
+.suggestion-status-roadmap {
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: capitalize;
+  line-height: 2.3rem;
+  color: var(--gray-dark);
+  margin-bottom: 0.8rem;
+}
+
+.suggestion-status-roadmap::before {
+  content: "";
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2.4rem;
 }
 
 .suggestion-title {

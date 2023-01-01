@@ -12,8 +12,9 @@ function Suggestion(props) {
   const { showSuggestionDetailsPage, getSuggestionDetailsID } =
     suggestionDetailsSlice.actions;
 
-  const comments = props.comments.length;
-  const replies = props.comments.reduce((sum, comment) => {
+  const suggestion = props.suggestion;
+  const comments = suggestion.comments.length;
+  const replies = suggestion.comments.reduce((sum, comment) => {
     if (comment.replies) {
       return sum + comment.replies.length;
     }
@@ -27,7 +28,7 @@ function Suggestion(props) {
 
   function handleSuggestionBox(event) {
     if (suggestionsPageVisible && !event.target.closest(".suggestion-upvote")) {
-      dispatch(getSuggestionDetailsID(props.id));
+      dispatch(getSuggestionDetailsID(suggestion.id));
       dispatch(hideSuggestionsPage());
       dispatch(showSuggestionDetailsPage());
     }
@@ -35,7 +36,7 @@ function Suggestion(props) {
 
   return (
     <div
-      className={`suggestion-box ${props.class ? "hover" : ""}`}
+      className={`suggestion-box ${props.name} ${props.class ? "hover" : ""}`}
       onClick={handleSuggestionBox}
     >
       <button className="suggestion-upvote" onClick={handleUpvote}>
@@ -52,12 +53,17 @@ function Suggestion(props) {
             fillRule="evenodd"
           />
         </svg>
-        <p className="upvote-amount">{props.upvotes}</p>
+        <p className="upvote-amount">{suggestion.upvotes}</p>
       </button>
       <div className="suggestion-text-box">
-        <h3 className="suggestion-title">{props.title}</h3>
-        <p className="suggestion-description">{props.description}</p>
-        <span className="suggestion-category">{props.category}</span>
+        {props.name === "roadmap" && (
+          <p className={`suggestion-status-roadmap ${suggestion.status}`}>
+            {suggestion.status}
+          </p>
+        )}
+        <h3 className="suggestion-title">{suggestion.title}</h3>
+        <p className="suggestion-description">{suggestion.description}</p>
+        <span className="suggestion-category">{suggestion.category}</span>
       </div>
       <div className="suggestion-comments">
         <img

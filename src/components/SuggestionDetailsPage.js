@@ -67,13 +67,7 @@ function SuggestionDetailsPage() {
           handleButton={handleEditFeedback}
         />
       </div>
-      <Suggestion
-        upvotes={suggestion.upvotes}
-        title={suggestion.title}
-        description={suggestion.description}
-        category={suggestion.category}
-        comments={suggestion.comments}
-      />
+      <Suggestion name="" suggestion={suggestion} />
       {suggestion.comments.length > 0 && (
         <div className="comments-container">
           <h3>

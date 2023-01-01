@@ -4,6 +4,7 @@ import suggestionsPageSlice from "./suggestionsPageSlice";
 import suggestionDetailsSlice from "./suggestionDetailsSlice";
 import addFeedbackSlice from "./addFeedbackSlice";
 import editFeedbackSlice from "./editFeedbackSlice";
+import roadmapPageSlice from "./roadmapPageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     suggestionDetails: suggestionDetailsSlice.reducer,
     addFeedbackPage: addFeedbackSlice.reducer,
     editFeedbackPage: editFeedbackSlice.reducer,
+    roadmapPage: roadmapPageSlice.reducer,
   },
 });

@@ -6,6 +6,7 @@ import SuggestionDetailsPage from "./components/SuggestionDetailsPage";
 import AddFeedbackPage from "./components/AddFeedbackPage";
 import EditFeedbackPage from "./components/EditFeedbackPage";
 import { useEffect } from "react";
+import RoadmapPage from "./components/RoadmapPage";
 
 function App() {
   const { suggestionsPageVisible } = useSelector(
@@ -20,6 +21,7 @@ function App() {
   const { editFeedbackPageVisible } = useSelector(
     (store) => store.editFeedbackPage
   );
+  const { roadmapPageVisible } = useSelector((store) => store.roadmapPage);
 
   useEffect(() => {
     document.body.scrollIntoView();
@@ -28,6 +30,7 @@ function App() {
     addFeedbackPageVisible,
     suggestionDetailsPageVisible,
     editFeedbackPageVisible,
+    roadmapPageVisible,
   ]);
 
   return (
@@ -41,6 +44,7 @@ function App() {
       {addFeedbackPageVisible && <AddFeedbackPage />}
       {suggestionDetailsPageVisible && <SuggestionDetailsPage />}
       {editFeedbackPageVisible && <EditFeedbackPage />}
+      {roadmapPageVisible && <RoadmapPage />}
     </div>
   );
 }

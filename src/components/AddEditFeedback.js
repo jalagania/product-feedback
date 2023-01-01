@@ -20,16 +20,13 @@ function AddEditFeedback(props) {
     props.name === "new" ? "" : suggestion.description
   );
   const [category, setCategory] = useState(
-    props.name === "new"
-      ? "Feature"
-      : suggestion.category.slice(0, 1).toUpperCase() +
-          suggestion.category.slice(1)
+    props.name === "new" ? "Feature" : suggestion.category
   );
   const [showCategories, setShowCategories] = useState(false);
-  const [status, setStatus] = useState(
-    suggestion.status.slice(0, 1).toUpperCase() + suggestion.status.slice(1)
-  );
+  const [status, setStatus] = useState(suggestion?.status);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
+  const [errorTitle, setErrorTitle] = useState(false);
+  const [errorComment, setErrorComment] = useState(false);
 
   function handleTitleChange(event) {
     if (event.target.value.length <= 50) {
@@ -75,20 +72,35 @@ function AddEditFeedback(props) {
       }
     }
 
-    if (event.target.textContent === "Add Feedback") {
+    if (
+      event.target.textContent === "Add Feedback" ||
+      event.target.textContent === "Save Changes"
+    ) {
       const newFeedback = {
         title: title,
         category: category,
         comment: comment,
       };
+
+      if (title === "") {
+        setErrorTitle(true);
+      } else {
+        setErrorTitle(false);
+      }
+
+      if (comment === "") {
+        setErrorComment(true);
+      } else {
+        setErrorComment(false);
+      }
+    }
+
+    if (event.target.textContent === "Add Feedback") {
+      //
     }
 
     if (event.target.textContent === "Save Changes") {
-      const newFeedback = {
-        title: title,
-        category: category,
-        comment: comment,
-      };
+      //
     }
   }
 
@@ -115,7 +127,13 @@ function AddEditFeedback(props) {
       )}
       <h4>Feedback Title</h4>
       <p className="instruction-text">Add a short, descriptive headline</p>
-      <input type="text" value={title} onChange={handleTitleChange} />
+      <input
+        className={errorTitle ? "error-border" : ""}
+        type="text"
+        value={title}
+        onChange={handleTitleChange}
+      />
+      {errorTitle && <p className="error-text">Can't be empty</p>}
       <h4>Category</h4>
       <p className="instruction-text">Choose a category for your feedback</p>
       <div className="category-menu-box">
@@ -188,7 +206,12 @@ function AddEditFeedback(props) {
       <p className="instruction-text">
         Include any specific comments on what should be improved, added, etc.
       </p>
-      <textarea value={comment} onChange={handleCommentChange}></textarea>
+      <textarea
+        className={errorComment ? "error-border" : ""}
+        value={comment}
+        onChange={handleCommentChange}
+      ></textarea>
+      {errorComment && <p className="error-text">Can't be empty</p>}
       <div className="feedback-buttons-box">
         <ButtonWithBackground
           name="Delete"

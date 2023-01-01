@@ -2,6 +2,7 @@ import "./Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
 import dataSlice from "../store/dataSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
+import roadmapPageSlice from "../store/roadmapPageSlice";
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -9,6 +10,9 @@ function Sidebar() {
   const { filterData } = dataSlice.actions;
   const { setKeyword } = suggestionsPageSlice.actions;
   const { keyword } = useSelector((store) => store.suggestionsPage);
+
+  const { hideSuggestionsPage } = suggestionsPageSlice.actions;
+  const { showRoadmapPage } = roadmapPageSlice.actions;
 
   const planned = appData.productRequests.filter(
     (request) => request.status === "planned"
@@ -23,6 +27,11 @@ function Sidebar() {
   function handleKeyword(event) {
     dispatch(filterData(event.target.textContent));
     dispatch(setKeyword(event.target.textContent));
+  }
+
+  function handleViewButton() {
+    dispatch(hideSuggestionsPage());
+    dispatch(showRoadmapPage());
   }
 
   return (
@@ -72,14 +81,16 @@ function Sidebar() {
       <div className="roadmap-box">
         <div className="roadmap-title-box">
           <p className="title">Roadmap</p>
-          <button className="view">View</button>
+          <button className="view" onClick={handleViewButton}>
+            View
+          </button>
         </div>
         <ul className="roadmap-list">
           <li className="planned">
             <p className="item-name">Planned</p>
             <p className="item-amount">{planned}</p>
           </li>
-          <li className="progress">
+          <li className="in-progress">
             <p className="item-name">In-Progress</p>
             <p className="item-amount">{progress}</p>
           </li>

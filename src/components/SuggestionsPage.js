@@ -104,13 +104,9 @@ function SuggestionsPage() {
             return (
               <Suggestion
                 key={request.id}
-                id={request.id}
+                name=""
                 class="hover"
-                upvotes={request.upvotes}
-                title={request.title}
-                description={request.description}
-                category={request.category}
-                comments={request.comments}
+                suggestion={request}
               />
             );
           })}

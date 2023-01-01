@@ -44,6 +44,20 @@ h4:not(:first-of-type) {
   margin-bottom: 1.6rem;
 }
 
+.error-text {
+  font-size: 1.4rem;
+  color: var(--red);
+  margin-top: 0.4rem;
+}
+
+.error-text:last-of-type {
+  margin-top: -0.4rem;
+}
+
+.error-border {
+  outline: 1px solid var(--red);
+}
+
 input,
 textarea {
   width: 100%;
@@ -94,6 +108,11 @@ textarea:focus {
 .btn-feedback-category img,
 .btn-feedback-status img {
   transition: all 0.2s;
+}
+
+.btn-feedback-category span,
+.btn-feedback-status span {
+  text-transform: capitalize;
 }
 
 .category-menu {
