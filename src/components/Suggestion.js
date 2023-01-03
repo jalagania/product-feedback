@@ -1,7 +1,8 @@
+import "./Suggestion.css";
 import { useDispatch, useSelector } from "react-redux";
+import roadmapPageSlice from "../store/roadmapPageSlice";
 import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
-import "./Suggestion.css";
 
 function Suggestion(props) {
   const dispatch = useDispatch();
@@ -9,8 +10,12 @@ function Suggestion(props) {
   const { suggestionsPageVisible } = useSelector(
     (store) => store.suggestionsPage
   );
-  const { showSuggestionDetailsPage, getSuggestionDetailsID } =
-    suggestionDetailsSlice.actions;
+  const {
+    showSuggestionDetailsPage,
+    getSuggestionDetailsID,
+    setPageBeforeSuggestionDetails,
+  } = suggestionDetailsSlice.actions;
+  const { hideRoadmapPage } = roadmapPageSlice.actions;
 
   const suggestion = props.suggestion;
   const comments = suggestion.comments.length;
@@ -27,10 +32,16 @@ function Suggestion(props) {
   }
 
   function handleSuggestionBox(event) {
-    if (suggestionsPageVisible && !event.target.closest(".suggestion-upvote")) {
+    if (!event.target.closest(".suggestion-upvote")) {
       dispatch(getSuggestionDetailsID(suggestion.id));
-      dispatch(hideSuggestionsPage());
       dispatch(showSuggestionDetailsPage());
+      if (suggestionsPageVisible) {
+        dispatch(hideSuggestionsPage());
+        dispatch(setPageBeforeSuggestionDetails("suggestionsPage"));
+      } else {
+        dispatch(hideRoadmapPage());
+        dispatch(setPageBeforeSuggestionDetails("roadmapPage"));
+      }
     }
   }
 

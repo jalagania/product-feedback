@@ -8,13 +8,16 @@ import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import ButtonGoBack from "./ButtonGoBack";
 import ButtonWithBackground from "./ButtonWithBackground";
 import editFeedbackSlice from "../store/editFeedbackSlice";
+import roadmapPageSlice from "../store/roadmapPageSlice";
 
 function SuggestionDetailsPage() {
   const [commentInput, setCommentInput] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(250);
 
   const dispatch = useDispatch();
-  const { suggestionID } = useSelector((store) => store.suggestionDetails);
+  const { suggestionID, pageBeforeSuggestionDetails } = useSelector(
+    (store) => store.suggestionDetails
+  );
   const suggestion = useSelector((store) =>
     store.data.appData.productRequests.find(
       (request) => request.id === suggestionID
@@ -24,6 +27,7 @@ function SuggestionDetailsPage() {
   const { hideSuggestionDetailsPage } = suggestionDetailsSlice.actions;
   const { showSuggestionsPage } = suggestionsPageSlice.actions;
   const { showEditFeedbackPage } = editFeedbackSlice.actions;
+  const { showRoadmapPage } = roadmapPageSlice.actions;
 
   const comments = suggestion.comments.length;
   const replies = suggestion.comments.reduce((sum, comment) => {
@@ -36,7 +40,11 @@ function SuggestionDetailsPage() {
 
   function handleGoBack() {
     dispatch(hideSuggestionDetailsPage());
-    dispatch(showSuggestionsPage());
+    if (pageBeforeSuggestionDetails === "suggestionsPage") {
+      dispatch(showSuggestionsPage());
+    } else {
+      dispatch(showRoadmapPage());
+    }
   }
 
   function handleEditFeedback() {

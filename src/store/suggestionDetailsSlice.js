@@ -5,6 +5,7 @@ const suggestionDetailsSlice = createSlice({
   initialState: {
     suggestionID: "",
     suggestionDetailsPageVisible: false,
+    pageBeforeSuggestionDetails: "",
   },
   reducers: {
     showSuggestionDetailsPage: (state) => {
@@ -17,6 +18,10 @@ const suggestionDetailsSlice = createSlice({
 
     getSuggestionDetailsID: (state, action) => {
       state.suggestionID = action.payload;
+    },
+
+    setPageBeforeSuggestionDetails: (state, action) => {
+      state.pageBeforeSuggestionDetails = action.payload;
     },
   },
 });

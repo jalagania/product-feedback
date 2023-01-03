@@ -1,14 +1,14 @@
 import "./RoadmapPage.css";
 import ButtonGoBack from "./ButtonGoBack";
 import ButtonWithBackground from "./ButtonWithBackground";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Suggestion from "./Suggestion";
-
-function handleGoBack() {}
-
-function handleAddFeedback() {}
+import addFeedbackSlice from "../store/addFeedbackSlice";
+import roadmapPageSlice from "../store/roadmapPageSlice";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function RoadmapPage() {
+  const dispatch = useDispatch();
   const suggestions = useSelector(
     (store) => store.data.appData.productRequests
   );
@@ -21,6 +21,21 @@ function RoadmapPage() {
   const live = suggestions.filter(
     (suggestion) => suggestion.status === "live"
   ).length;
+  const { showSuggestionsPage } = suggestionsPageSlice.actions;
+  const { hideRoadmapPage } = roadmapPageSlice.actions;
+  const { showAddFeedbackPage, setPageBeforeAddFeedback } =
+    addFeedbackSlice.actions;
+
+  function handleGoBack() {
+    dispatch(hideRoadmapPage());
+    dispatch(showSuggestionsPage());
+  }
+
+  function handleAddFeedback() {
+    dispatch(setPageBeforeAddFeedback("roadmapPage"));
+    dispatch(showAddFeedbackPage());
+    dispatch(hideRoadmapPage());
+  }
 
   return (
     <div className="roadmap-container">

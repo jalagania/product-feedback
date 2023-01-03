@@ -4,14 +4,19 @@ const addFeedbackSlice = createSlice({
   name: "addFeedback",
   initialState: {
     addFeedbackPageVisible: false,
+    pageBeforeAddFeedback: "",
   },
   reducers: {
     showAddFeedbackPage: (state) => {
       state.addFeedbackPageVisible = true;
     },
 
-    closeAddFeedbackPage: (state) => {
+    hideAddFeedbackPage: (state) => {
       state.addFeedbackPageVisible = false;
+    },
+
+    setPageBeforeAddFeedback: (state, action) => {
+      state.pageBeforeAddFeedback = action.payload;
     },
   },
 });

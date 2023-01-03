@@ -10,13 +10,16 @@ import addFeedbackSlice from "../store/addFeedbackSlice";
 function SuggestionsPage() {
   const dispatch = useDispatch();
   const { sortData } = dataSlice.actions;
-  const { filteredData } = useSelector((store) => store.data);
+  const suggestions = useSelector((store) =>
+    store.data.filteredData.filter((request) => request.status === "suggestion")
+  );
   const { hideSuggestionsPage, toggleSortMenu, setSortCategory } =
     suggestionsPageSlice.actions;
   const { keyword, showSortMenu, sortCategory } = useSelector(
     (store) => store.suggestionsPage
   );
-  const { showAddFeedbackPage } = addFeedbackSlice.actions;
+  const { showAddFeedbackPage, setPageBeforeAddFeedback } =
+    addFeedbackSlice.actions;
 
   const sotrItems = [
     "Most Upvotes",
@@ -34,6 +37,7 @@ function SuggestionsPage() {
   }
 
   function handleAddFeedback() {
+    dispatch(setPageBeforeAddFeedback("suggestionsPage"));
     dispatch(hideSuggestionsPage());
     dispatch(showAddFeedbackPage());
   }
@@ -54,7 +58,7 @@ function SuggestionsPage() {
             alt="bulb"
             className="bulb-icon"
           />
-          <span className="suggestion-amount">{filteredData.length}</span>
+          <span className="suggestion-amount">{suggestions.length}</span>
           <span className="suggestion-text">Suggestions</span>
         </div>
         <button className="sort-box" onClick={handleSortButton}>
@@ -99,8 +103,8 @@ function SuggestionsPage() {
         />
       </header>
       <div className="suggestions-container">
-        {filteredData.length > 0 &&
-          filteredData.map((request) => {
+        {suggestions.length > 0 &&
+          suggestions.map((request) => {
             return (
               <Suggestion
                 key={request.id}
@@ -110,7 +114,7 @@ function SuggestionsPage() {
               />
             );
           })}
-        {filteredData.length === 0 && (
+        {suggestions.length === 0 && (
           <div className="no-feedback-box">
             <img
               src={
