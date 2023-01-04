@@ -1,18 +1,40 @@
 import "./AddEditFeedback.css";
 import { useState } from "react";
 import ButtonWithBackground from "./ButtonWithBackground";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import dataSlice from "../store/dataSlice";
+import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
+import editFeedbackSlice from "../store/editFeedbackSlice";
+import addFeedbackSlice from "../store/addFeedbackSlice";
+import suggestionsPageSlice from "../store/suggestionsPageSlice";
+import roadmapPageSlice from "../store/roadmapPageSlice";
 
 function AddEditFeedback(props) {
+  const dispatch = useDispatch();
   const { suggestionID } = useSelector((store) => store.suggestionDetails);
   const suggestion = useSelector((store) =>
     store.data.appData.productRequests.find(
       (request) => request.id === suggestionID
     )
   );
+  const { pageBeforeAddFeedback } = useSelector(
+    (store) => store.addFeedbackPage
+  );
+  const { addFeedback, editFeedback, syncFilteredData } = dataSlice.actions;
+  const { showSuggestionDetailsPage } = suggestionDetailsSlice.actions;
+  const { hideAddFeedbackPage } = addFeedbackSlice.actions;
+  const { hideEditFeedbackPage } = editFeedbackSlice.actions;
+  const { showSuggestionsPage } = suggestionsPageSlice.actions;
+  const { showRoadmapPage } = roadmapPageSlice.actions;
 
   const categories = ["Feature", "UI", "UX", "Enhancement", "Bug"];
   const statusItems = ["Suggestion", "Planned", "In-Progress", "Live"];
+  const newFeedbackID = useSelector(
+    (store) =>
+      store.data.appData.productRequests.slice().sort((a, b) => b.id - a.id)[0]
+        .id
+  );
+
   const [title, setTitle] = useState(
     props.name === "new" ? "" : suggestion.title
   );
@@ -53,7 +75,7 @@ function AddEditFeedback(props) {
   }
 
   function handleCommentChange(event) {
-    if (event.target.value.length <= 150) {
+    if (event.target.value.length <= 250) {
       setComment(event.target.value);
     }
   }
@@ -65,10 +87,16 @@ function AddEditFeedback(props) {
 
     if (event.target.textContent === "Cancel") {
       if (props.name === "new") {
-        // blabla
+        dispatch(hideAddFeedbackPage());
         resetAll();
+        if (pageBeforeAddFeedback === "suggestionsPage") {
+          dispatch(showSuggestionsPage());
+        } else {
+          dispatch(showRoadmapPage());
+        }
       } else {
-        // blabla
+        dispatch(hideEditFeedbackPage());
+        dispatch(showSuggestionDetailsPage());
       }
     }
 
@@ -76,12 +104,6 @@ function AddEditFeedback(props) {
       event.target.textContent === "Add Feedback" ||
       event.target.textContent === "Save Changes"
     ) {
-      const newFeedback = {
-        title: title,
-        category: category,
-        comment: comment,
-      };
-
       if (title === "") {
         setErrorTitle(true);
       } else {
@@ -95,12 +117,46 @@ function AddEditFeedback(props) {
       }
     }
 
-    if (event.target.textContent === "Add Feedback") {
-      //
-    }
+    if (title !== "" && comment !== "") {
+      if (event.target.textContent === "Add Feedback") {
+        const newFeedback = {
+          id: newFeedbackID + 1,
+          title: title,
+          category:
+            category.length === 2
+              ? category.toUpperCase()
+              : category.toLowerCase(),
+          upvotes: 0,
+          upvoted: false,
+          status: "suggestion",
+          description: comment,
+          comments: [],
+        };
+        dispatch(addFeedback(newFeedback));
+        dispatch(hideAddFeedbackPage());
+        resetAll();
+        if (pageBeforeAddFeedback === "suggestionsPage") {
+          dispatch(showSuggestionsPage());
+        } else {
+          dispatch(showRoadmapPage());
+        }
+        dispatch(syncFilteredData());
+      }
 
-    if (event.target.textContent === "Save Changes") {
-      //
+      if (event.target.textContent === "Save Changes") {
+        const newFeedback = {
+          title: title,
+          category:
+            category.length === 2
+              ? category.toUpperCase()
+              : category.toLowerCase(),
+          status: status.toLowerCase(),
+          description: comment,
+        };
+        dispatch(editFeedback([suggestionID, newFeedback]));
+        dispatch(hideEditFeedbackPage());
+        dispatch(showSuggestionDetailsPage());
+      }
     }
   }
 

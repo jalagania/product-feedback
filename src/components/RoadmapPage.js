@@ -9,16 +9,14 @@ import suggestionsPageSlice from "../store/suggestionsPageSlice";
 
 function RoadmapPage() {
   const dispatch = useDispatch();
-  const suggestions = useSelector(
-    (store) => store.data.appData.productRequests
-  );
-  const planned = suggestions.filter(
+  const { productRequests } = useSelector((store) => store.data.appData);
+  const planned = productRequests.filter(
     (suggestion) => suggestion.status === "planned"
   ).length;
-  const progress = suggestions.filter(
+  const progress = productRequests.filter(
     (suggestion) => suggestion.status === "in-progress"
   ).length;
-  const live = suggestions.filter(
+  const live = productRequests.filter(
     (suggestion) => suggestion.status === "live"
   ).length;
   const { showSuggestionsPage } = suggestionsPageSlice.actions;
@@ -56,7 +54,7 @@ function RoadmapPage() {
             <h3>Planned ({planned})</h3>
             <p>Ideas prioritized for research</p>
           </div>
-          {suggestions.map((suggestion) => {
+          {productRequests.map((suggestion) => {
             if (suggestion.status === "planned") {
               return (
                 <Suggestion
@@ -74,7 +72,7 @@ function RoadmapPage() {
             <h3>In-Progress ({progress})</h3>
             <p>Currently being developed</p>
           </div>
-          {suggestions.map((suggestion) => {
+          {productRequests.map((suggestion) => {
             if (suggestion.status === "in-progress") {
               return (
                 <Suggestion
@@ -92,7 +90,7 @@ function RoadmapPage() {
             <h3>Live ({live})</h3>
             <p>Released features</p>
           </div>
-          {suggestions.map((suggestion) => {
+          {productRequests.map((suggestion) => {
             if (suggestion.status === "live") {
               return (
                 <Suggestion

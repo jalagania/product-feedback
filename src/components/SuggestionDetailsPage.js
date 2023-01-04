@@ -9,6 +9,7 @@ import ButtonGoBack from "./ButtonGoBack";
 import ButtonWithBackground from "./ButtonWithBackground";
 import editFeedbackSlice from "../store/editFeedbackSlice";
 import roadmapPageSlice from "../store/roadmapPageSlice";
+import dataSlice from "../store/dataSlice";
 
 function SuggestionDetailsPage() {
   const [commentInput, setCommentInput] = useState("");
@@ -23,11 +24,13 @@ function SuggestionDetailsPage() {
       (request) => request.id === suggestionID
     )
   );
+  const { currentUser } = useSelector((store) => store.data.appData);
 
   const { hideSuggestionDetailsPage } = suggestionDetailsSlice.actions;
   const { showSuggestionsPage } = suggestionsPageSlice.actions;
   const { showEditFeedbackPage } = editFeedbackSlice.actions;
   const { showRoadmapPage } = roadmapPageSlice.actions;
+  const { addComment } = dataSlice.actions;
 
   const comments = suggestion.comments.length;
   const replies = suggestion.comments.reduce((sum, comment) => {
@@ -61,8 +64,20 @@ function SuggestionDetailsPage() {
 
   function handleCommentSubmit(event) {
     event.preventDefault();
-    setCommentInput("");
-    console.log("submit comment");
+    const id =
+      suggestion.comments.length > 0
+        ? suggestion.comments.slice(-1)[0].id + 1
+        : 1;
+    const newComment = {
+      id: id,
+      content: commentInput,
+      user: { ...currentUser },
+    };
+    if (commentInput !== "") {
+      dispatch(addComment([suggestionID, newComment]));
+      setCommentInput("");
+      setCharactersLeft(250);
+    }
   }
 
   return (

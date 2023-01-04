@@ -1,39 +1,95 @@
 import "./SuggestionsPage.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Suggestion from "./Suggestion";
 import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
-import dataSlice from "../store/dataSlice";
 import ButtonWithBackground from "./ButtonWithBackground";
 import addFeedbackSlice from "../store/addFeedbackSlice";
+import dataSlice from "../store/dataSlice";
 
 function SuggestionsPage() {
   const dispatch = useDispatch();
-  const { sortData } = dataSlice.actions;
+  const { filterData } = dataSlice.actions;
   const suggestions = useSelector((store) =>
     store.data.filteredData.filter((request) => request.status === "suggestion")
   );
-  const { hideSuggestionsPage, toggleSortMenu, setSortCategory } =
-    suggestionsPageSlice.actions;
-  const { keyword, showSortMenu, sortCategory } = useSelector(
-    (store) => store.suggestionsPage
-  );
+  const { hideSuggestionsPage } = suggestionsPageSlice.actions;
+  const { keyword } = useSelector((store) => store.suggestionsPage);
   const { showAddFeedbackPage, setPageBeforeAddFeedback } =
     addFeedbackSlice.actions;
 
-  const sotrItems = [
+  const sortItems = [
     "Most Upvotes",
     "Least Upvotes",
     "Most Comments",
     "Least Comments",
   ];
 
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [sortCategory, setSortCategory] = useState("Most Upvotes");
+  const [sortedData, setSortedData] = useState(suggestions);
+
+  function sortSuggestions() {
+    if (sortCategory === "Most Upvotes") {
+      setSortedData(suggestions.sort((a, b) => b.upvotes - a.upvotes));
+    }
+
+    if (sortCategory === "Least Upvotes") {
+      setSortedData(suggestions.sort((a, b) => a.upvotes - b.upvotes));
+    }
+
+    if (sortCategory === "Most Comments") {
+      setSortedData(
+        suggestions.sort(
+          (a, b) =>
+            b.comments.length +
+            b.comments.reduce((sum, comment) => {
+              if (comment.replies) {
+                return sum + comment.replies.length;
+              }
+              return sum;
+            }, 0) -
+            (a.comments.length +
+              a.comments.reduce((sum, comment) => {
+                if (comment.replies) {
+                  return sum + comment.replies.length;
+                }
+                return sum;
+              }, 0))
+        )
+      );
+    }
+
+    if (sortCategory === "Least Comments") {
+      setSortedData(
+        suggestions.sort(
+          (a, b) =>
+            a.comments.length +
+            a.comments.reduce((sum, comment) => {
+              if (comment.replies) {
+                return sum + comment.replies.length;
+              }
+              return sum;
+            }, 0) -
+            (b.comments.length +
+              b.comments.reduce((sum, comment) => {
+                if (comment.replies) {
+                  return sum + comment.replies.length;
+                }
+                return sum;
+              }, 0))
+        )
+      );
+    }
+  }
+
   function handleSortButton() {
-    dispatch(toggleSortMenu());
+    setShowSortMenu(!showSortMenu);
   }
 
   function handleSortCategory(event) {
-    dispatch(setSortCategory(event.target.textContent));
+    setSortCategory(event.target.textContent);
+    setShowSortMenu(false);
   }
 
   function handleAddFeedback() {
@@ -43,7 +99,8 @@ function SuggestionsPage() {
   }
 
   useEffect(() => {
-    dispatch(sortData(sortCategory));
+    sortSuggestions();
+    dispatch(filterData());
   }, [keyword, sortCategory]);
 
   return (
@@ -58,7 +115,7 @@ function SuggestionsPage() {
             alt="bulb"
             className="bulb-icon"
           />
-          <span className="suggestion-amount">{suggestions.length}</span>
+          <span className="suggestion-amount">{sortedData.length}</span>
           <span className="suggestion-text">Suggestions</span>
         </div>
         <button className="sort-box" onClick={handleSortButton}>
@@ -79,7 +136,7 @@ function SuggestionsPage() {
           </svg>
         </button>
         <ul className={`sort-menu ${showSortMenu ? "" : "hidden"}`}>
-          {sotrItems.map((item, index) => {
+          {sortItems.map((item, index) => {
             return (
               <li
                 className="menu-item"
@@ -103,8 +160,8 @@ function SuggestionsPage() {
         />
       </header>
       <div className="suggestions-container">
-        {suggestions.length > 0 &&
-          suggestions.map((request) => {
+        {sortedData.length > 0 &&
+          sortedData.map((request) => {
             return (
               <Suggestion
                 key={request.id}
@@ -114,7 +171,7 @@ function SuggestionsPage() {
               />
             );
           })}
-        {suggestions.length === 0 && (
+        {sortedData.length === 0 && (
           <div className="no-feedback-box">
             <img
               src={

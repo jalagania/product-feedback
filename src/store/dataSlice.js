@@ -8,6 +8,10 @@ const dataSlice = createSlice({
     filteredData: data.productRequests,
   },
   reducers: {
+    syncFilteredData: (state) => {
+      state.filteredData = state.appData.productRequests;
+    },
+
     filterData: (state, action) => {
       if (action.payload === "All") {
         state.filteredData = state.appData.productRequests;
@@ -15,13 +19,13 @@ const dataSlice = createSlice({
 
       if (action.payload === "UI") {
         state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "ui"
+          (request) => request.category === "UI"
         );
       }
 
       if (action.payload === "UX") {
         state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "ux"
+          (request) => request.category === "UX"
         );
       }
 
@@ -44,59 +48,55 @@ const dataSlice = createSlice({
       }
     },
 
-    sortData: (state, action) => {
-      if (action.payload === "Most Upvotes") {
-        state.filteredData = state.filteredData.sort(
-          (a, b) => b.upvotes - a.upvotes
-        );
-      }
-
-      if (action.payload === "Least Upvotes") {
-        state.filteredData = state.filteredData.sort(
-          (a, b) => a.upvotes - b.upvotes
-        );
-      }
-
-      if (action.payload === "Most Comments") {
-        state.filteredData = state.filteredData.sort(
-          (a, b) =>
-            b.comments.length +
-            b.comments.reduce((sum, comment) => {
-              if (comment.replies) {
-                return sum + comment.replies.length;
-              }
-              return sum;
-            }, 0) -
-            (a.comments.length +
-              a.comments.reduce((sum, comment) => {
-                if (comment.replies) {
-                  return sum + comment.replies.length;
-                }
-                return sum;
-              }, 0))
-        );
-      }
-
-      if (action.payload === "Least Comments") {
-        state.filteredData = state.filteredData.sort(
-          (a, b) =>
-            a.comments.length +
-            a.comments.reduce((sum, comment) => {
-              if (comment.replies) {
-                return sum + comment.replies.length;
-              }
-              return sum;
-            }, 0) -
-            (b.comments.length +
-              b.comments.reduce((sum, comment) => {
-                if (comment.replies) {
-                  return sum + comment.replies.length;
-                }
-                return sum;
-              }, 0))
-        );
-      }
+    addFeedback: (state, action) => {
+      const newFeedback = action.payload;
+      state.appData = {
+        ...state.appData,
+        productRequests: [...state.appData.productRequests, newFeedback],
+      };
     },
+
+    deleteFeedback: (state, action) => {},
+
+    editFeedback: (state, action) => {
+      const requestID = action.payload[0];
+      const newFeedback = action.payload[1];
+      const requestIndex = state.appData.productRequests.findIndex(
+        (request) => request.id === requestID
+      );
+      state.appData = {
+        ...state.appData,
+        productRequests: [
+          ...state.appData.productRequests.slice(0, requestIndex),
+          { ...state.appData.productRequests[requestIndex], ...newFeedback },
+          ...state.appData.productRequests.slice(requestIndex + 1),
+        ],
+      };
+    },
+
+    addComment: (state, action) => {
+      const requestID = action.payload[0];
+      const newComment = action.payload[1];
+      const requestIndex = state.appData.productRequests.findIndex(
+        (request) => request.id === requestID
+      );
+      state.appData = {
+        ...state.appData,
+        productRequests: [
+          ...state.appData.productRequests.slice(0, requestIndex),
+          {
+            ...state.appData.productRequests[requestIndex],
+            comments: [
+              ...state.appData.productRequests[requestIndex].comments,
+              newComment,
+            ],
+          },
+          ...state.appData.productRequests.slice(requestIndex + 1),
+        ],
+      };
+    },
+
+    addReply: (state, action) => {},
   },
 });
 
