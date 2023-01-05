@@ -34,10 +34,6 @@ body {
   font-family: "Jost", sans-serif;
   font-size: 1.6rem;
   background-color: var(--gray-light);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 img {
