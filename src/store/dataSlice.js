@@ -5,49 +5,8 @@ const dataSlice = createSlice({
   name: "appData",
   initialState: {
     appData: data,
-    filteredData: data.productRequests,
   },
   reducers: {
-    syncFilteredData: (state) => {
-      state.filteredData = state.appData.productRequests;
-    },
-
-    filterData: (state, action) => {
-      if (action.payload === "All") {
-        state.filteredData = state.appData.productRequests;
-      }
-
-      if (action.payload === "UI") {
-        state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "UI"
-        );
-      }
-
-      if (action.payload === "UX") {
-        state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "UX"
-        );
-      }
-
-      if (action.payload === "Enhancement") {
-        state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "enhancement"
-        );
-      }
-
-      if (action.payload === "Bug") {
-        state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "bug"
-        );
-      }
-
-      if (action.payload === "Feature") {
-        state.filteredData = state.appData.productRequests.filter(
-          (request) => request.category === "feature"
-        );
-      }
-    },
-
     upvote: (state, action) => {
       const requestID = action.payload;
       const requestIndex = state.appData.productRequests.findIndex(

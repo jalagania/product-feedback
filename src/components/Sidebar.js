@@ -1,13 +1,11 @@
 import "./Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
-import dataSlice from "../store/dataSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import roadmapPageSlice from "../store/roadmapPageSlice";
 
 function Sidebar() {
   const dispatch = useDispatch();
   const { appData } = useSelector((store) => store.data);
-  const { filterData } = dataSlice.actions;
   const { setKeyword } = suggestionsPageSlice.actions;
   const { keyword } = useSelector((store) => store.suggestionsPage);
 
@@ -25,7 +23,6 @@ function Sidebar() {
   ).length;
 
   function handleKeyword(event) {
-    dispatch(filterData(event.target.textContent));
     dispatch(setKeyword(event.target.textContent));
   }
 

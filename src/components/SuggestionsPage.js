@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import ButtonWithBackground from "./ButtonWithBackground";
 import addFeedbackSlice from "../store/addFeedbackSlice";
-import dataSlice from "../store/dataSlice";
 
 function SuggestionsPage() {
   const dispatch = useDispatch();
-  const { filterData } = dataSlice.actions;
+  const { appData } = useSelector((store) => store.data);
   const suggestions = useSelector((store) =>
-    store.data.filteredData.filter((request) => request.status === "suggestion")
+    store.data.appData.productRequests.filter(
+      (request) => request.status === "suggestion"
+    )
   );
   const { hideSuggestionsPage } = suggestionsPageSlice.actions;
   const { keyword } = useSelector((store) => store.suggestionsPage);
@@ -28,6 +29,39 @@ function SuggestionsPage() {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [sortCategory, setSortCategory] = useState("Most Upvotes");
   const [sortedData, setSortedData] = useState(suggestions);
+
+  function filterSuggestions() {
+    switch (keyword) {
+      case "All":
+        setSortedData(suggestions);
+        break;
+      case "UI":
+        setSortedData(
+          suggestions.filter((request) => request.category === "UI")
+        );
+        break;
+      case "UX":
+        setSortedData(
+          suggestions.filter((request) => request.category === "UX")
+        );
+        break;
+      case "Enhancement":
+        setSortedData(
+          suggestions.filter((request) => request.category === "enhancement")
+        );
+        break;
+      case "Bug":
+        setSortedData(
+          suggestions.filter((request) => request.category === "bug")
+        );
+        break;
+      case "Feature":
+        setSortedData(
+          suggestions.filter((request) => request.category === "feature")
+        );
+        break;
+    }
+  }
 
   function sortSuggestions() {
     if (sortCategory === "Most Upvotes") {
@@ -99,9 +133,10 @@ function SuggestionsPage() {
   }
 
   useEffect(() => {
+    setSortedData(suggestions);
     sortSuggestions();
-    dispatch(filterData());
-  }, [keyword, sortCategory]);
+    filterSuggestions();
+  }, [appData, keyword, sortCategory]);
 
   useEffect(() => {
     function closeSortMenu(event) {
@@ -112,7 +147,6 @@ function SuggestionsPage() {
         setShowSortMenu(false);
       }
     }
-
     document.addEventListener("click", closeSortMenu);
 
     return () => document.removeEventListener("click", closeSortMenu);

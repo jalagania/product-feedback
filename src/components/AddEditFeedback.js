@@ -22,8 +22,7 @@ function AddEditFeedback(props) {
   const { pageBeforeAddFeedback } = useSelector(
     (store) => store.addFeedbackPage
   );
-  const { addFeedback, deleteFeedback, editFeedback, syncFilteredData } =
-    dataSlice.actions;
+  const { addFeedback, deleteFeedback, editFeedback } = dataSlice.actions;
   const { showSuggestionDetailsPage } = suggestionDetailsSlice.actions;
   const { hideAddFeedbackPage } = addFeedbackSlice.actions;
   const { hideEditFeedbackPage } = editFeedbackSlice.actions;
@@ -149,7 +148,6 @@ function AddEditFeedback(props) {
         } else {
           dispatch(showRoadmapPage());
         }
-        dispatch(syncFilteredData());
       }
 
       if (event.target.textContent === "Save Changes") {
@@ -229,7 +227,12 @@ function AddEditFeedback(props) {
       <h4>Category</h4>
       <p className="instruction-text">Choose a category for your feedback</p>
       <div className="category-menu-box">
-        <button className="btn-feedback-category" onClick={handleCategoryMenu}>
+        <button
+          className={`btn-feedback-category ${
+            showCategories ? "blue-border" : ""
+          }`}
+          onClick={handleCategoryMenu}
+        >
           <span>{category}</span>
           <img
             className={showCategories ? "rotate" : ""}
@@ -265,7 +268,12 @@ function AddEditFeedback(props) {
           <h4>Update Status</h4>
           <p className="instruction-text">Change feature state</p>
           <div className="status-menu-box">
-            <button className="btn-feedback-status" onClick={handleStatusMenu}>
+            <button
+              className={`btn-feedback-status ${
+                showStatusMenu ? "blue-border" : ""
+              }`}
+              onClick={handleStatusMenu}
+            >
               <span>{status}</span>
               <img
                 className={showStatusMenu ? "rotate" : ""}
