@@ -54,54 +54,63 @@ function RoadmapPage() {
             <h3>Planned ({planned})</h3>
             <p>Ideas prioritized for research</p>
           </div>
-          {productRequests.map((suggestion) => {
-            if (suggestion.status === "planned") {
-              return (
-                <Suggestion
-                  key={suggestion.id}
-                  name="roadmap"
-                  class="hover"
-                  suggestion={suggestion}
-                />
-              );
-            }
-          })}
+          {productRequests
+            .slice()
+            .sort((a, b) => b.upvotes - a.upvotes)
+            .map((suggestion) => {
+              if (suggestion.status === "planned") {
+                return (
+                  <Suggestion
+                    key={suggestion.id}
+                    name="roadmap"
+                    class="hover"
+                    suggestion={suggestion}
+                  />
+                );
+              }
+            })}
         </div>
         <div className="in-progress-box">
           <div className="title-box">
             <h3>In-Progress ({progress})</h3>
             <p>Currently being developed</p>
           </div>
-          {productRequests.map((suggestion) => {
-            if (suggestion.status === "in-progress") {
-              return (
-                <Suggestion
-                  key={suggestion.id}
-                  name="roadmap"
-                  class="hover"
-                  suggestion={suggestion}
-                />
-              );
-            }
-          })}
+          {productRequests
+            .slice()
+            .sort((a, b) => b.upvotes - a.upvotes)
+            .map((suggestion) => {
+              if (suggestion.status === "in-progress") {
+                return (
+                  <Suggestion
+                    key={suggestion.id}
+                    name="roadmap"
+                    class="hover"
+                    suggestion={suggestion}
+                  />
+                );
+              }
+            })}
         </div>
         <div className="live-box">
           <div className="title-box">
             <h3>Live ({live})</h3>
             <p>Released features</p>
           </div>
-          {productRequests.map((suggestion) => {
-            if (suggestion.status === "live") {
-              return (
-                <Suggestion
-                  key={suggestion.id}
-                  name="roadmap"
-                  class="hover"
-                  suggestion={suggestion}
-                />
-              );
-            }
-          })}
+          {productRequests
+            .slice()
+            .sort((a, b) => b.upvotes - a.upvotes)
+            .map((suggestion) => {
+              if (suggestion.status === "live") {
+                return (
+                  <Suggestion
+                    key={suggestion.id}
+                    name="roadmap"
+                    class="hover"
+                    suggestion={suggestion}
+                  />
+                );
+              }
+            })}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import "./SuggestionDetailsPage.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Suggestion from "./Suggestion";
 import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
@@ -12,6 +12,7 @@ import roadmapPageSlice from "../store/roadmapPageSlice";
 import dataSlice from "../store/dataSlice";
 
 function SuggestionDetailsPage() {
+  const textareaRef = useRef();
   const [commentInput, setCommentInput] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(250);
 
@@ -64,21 +65,36 @@ function SuggestionDetailsPage() {
 
   function handleCommentSubmit(event) {
     event.preventDefault();
-    const id =
-      suggestion.comments.length > 0
-        ? suggestion.comments.slice(-1)[0].id + 1
-        : 1;
-    const newComment = {
-      id: id,
-      content: commentInput,
-      user: { ...currentUser },
-    };
     if (commentInput !== "") {
+      const id =
+        suggestion.comments.length > 0
+          ? suggestion.comments.slice(-1)[0].id + 1
+          : 1;
+      const newComment = {
+        id: id,
+        content: commentInput,
+        user: { ...currentUser },
+      };
       dispatch(addComment([suggestionID, newComment]));
       setCommentInput("");
       setCharactersLeft(250);
     }
   }
+
+  useEffect(() => {
+    function handleEnterPress(event) {
+      if (
+        document.activeElement === textareaRef.current &&
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        handleCommentSubmit(event);
+      }
+    }
+    document.addEventListener("keydown", handleEnterPress);
+
+    return () => document.removeEventListener("keydown", handleEnterPress);
+  }, []);
 
   return (
     <div className="suggestion-details-container">
@@ -100,9 +116,16 @@ function SuggestionDetailsPage() {
           {suggestion.comments.map((comment) => {
             return (
               <div key={comment.id}>
-                <Comment comment={comment} />
+                <Comment comment={comment} id={comment.id} />
                 {comment.replies?.map((reply, index) => {
-                  return <Comment key={index} comment={reply} class="reply" />;
+                  return (
+                    <Comment
+                      key={index}
+                      id={comment.id}
+                      comment={reply}
+                      class="reply"
+                    />
+                  );
                 })}
               </div>
             );
@@ -116,16 +139,13 @@ function SuggestionDetailsPage() {
           placeholder="Type your comment here"
           value={commentInput}
           onChange={handleCommentInput}
+          ref={textareaRef}
         ></textarea>
         <div className="button-box">
           <p className="characters-amount">
             <span className="amount">{charactersLeft} </span> Characters left
           </p>
-          <ButtonWithBackground
-            name="Post Comment"
-            class="post-comment"
-            handleButton={handleCommentSubmit}
-          />
+          <ButtonWithBackground name="Post Comment" class="post-comment" />
         </div>
       </form>
     </div>

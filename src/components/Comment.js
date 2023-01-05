@@ -1,8 +1,16 @@
 import "./Comment.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ButtonWithBackground from "./ButtonWithBackground";
+import { useDispatch, useSelector } from "react-redux";
+import dataSlice from "../store/dataSlice";
 
 function Comment(props) {
+  const dispatch = useDispatch();
+  const { addReply } = dataSlice.actions;
+  const { currentUser } = useSelector((store) => store.data.appData);
+  const { suggestionID } = useSelector((store) => store.suggestionDetails);
+
+  const textareaRef = useRef();
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyInput, setReplyInput] = useState("");
 
@@ -16,10 +24,20 @@ function Comment(props) {
 
   function handlePostReply() {
     if (replyInput !== "") {
+      const newReply = {
+        content: replyInput,
+        replyingTo: props.comment.user.username,
+        user: { ...currentUser },
+      };
+      dispatch(addReply([suggestionID, props.id, newReply]));
       setShowReplyInput(false);
       setReplyInput("");
     }
   }
+
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, [showReplyInput]);
 
   return (
     <div className={`comment-box ${props.class ? "reply" : ""}`}>
@@ -47,6 +65,7 @@ function Comment(props) {
               placeholder="Type your reply here"
               value={replyInput}
               onChange={handleReplyInput}
+              ref={textareaRef}
             ></textarea>
             <ButtonWithBackground
               name="Post Reply"

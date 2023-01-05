@@ -35,7 +35,6 @@ function App() {
     suggestionDetailsPageVisible,
     editFeedbackPageVisible,
     roadmapPageVisible,
-    ,
   ]);
 
   useEffect(() => {
