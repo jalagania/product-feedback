@@ -48,6 +48,39 @@ const dataSlice = createSlice({
       }
     },
 
+    upvote: (state, action) => {
+      const requestID = action.payload;
+      const requestIndex = state.appData.productRequests.findIndex(
+        (request) => request.id === requestID
+      );
+      let upvoted, upvotes;
+      if (state.appData.productRequests[requestIndex].upvoted === undefined) {
+        upvoted = true;
+        upvotes = state.appData.productRequests[requestIndex].upvotes + 1;
+      } else {
+        upvoted = !state.appData.productRequests[requestIndex].upvoted;
+      }
+
+      if (upvoted === true) {
+        upvotes = state.appData.productRequests[requestIndex].upvotes + 1;
+      } else {
+        upvotes = state.appData.productRequests[requestIndex].upvotes - 1;
+      }
+
+      state.appData = {
+        ...state.appData,
+        productRequests: [
+          ...state.appData.productRequests.slice(0, requestIndex),
+          {
+            ...state.appData.productRequests[requestIndex],
+            upvoted: upvoted,
+            upvotes: upvotes,
+          },
+          ...state.appData.productRequests.slice(requestIndex + 1),
+        ],
+      };
+    },
+
     addFeedback: (state, action) => {
       const newFeedback = action.payload;
       state.appData = {
@@ -56,7 +89,15 @@ const dataSlice = createSlice({
       };
     },
 
-    deleteFeedback: (state, action) => {},
+    deleteFeedback: (state, action) => {
+      const requestID = action.payload;
+      state.appData = {
+        ...state.appData,
+        productRequests: state.appData.productRequests.filter(
+          (request) => request.id !== requestID
+        ),
+      };
+    },
 
     editFeedback: (state, action) => {
       const requestID = action.payload[0];

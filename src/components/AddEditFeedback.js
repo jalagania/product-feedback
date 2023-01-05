@@ -1,5 +1,5 @@
 import "./AddEditFeedback.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonWithBackground from "./ButtonWithBackground";
 import { useDispatch, useSelector } from "react-redux";
 import dataSlice from "../store/dataSlice";
@@ -11,7 +11,9 @@ import roadmapPageSlice from "../store/roadmapPageSlice";
 
 function AddEditFeedback(props) {
   const dispatch = useDispatch();
-  const { suggestionID } = useSelector((store) => store.suggestionDetails);
+  const { suggestionID, pageBeforeSuggestionDetails } = useSelector(
+    (store) => store.suggestionDetails
+  );
   const suggestion = useSelector((store) =>
     store.data.appData.productRequests.find(
       (request) => request.id === suggestionID
@@ -20,7 +22,8 @@ function AddEditFeedback(props) {
   const { pageBeforeAddFeedback } = useSelector(
     (store) => store.addFeedbackPage
   );
-  const { addFeedback, editFeedback, syncFilteredData } = dataSlice.actions;
+  const { addFeedback, deleteFeedback, editFeedback, syncFilteredData } =
+    dataSlice.actions;
   const { showSuggestionDetailsPage } = suggestionDetailsSlice.actions;
   const { hideAddFeedbackPage } = addFeedbackSlice.actions;
   const { hideEditFeedbackPage } = editFeedbackSlice.actions;
@@ -82,7 +85,13 @@ function AddEditFeedback(props) {
 
   function handleButton(event) {
     if (event.target.textContent === "Delete") {
-      // blabla
+      dispatch(deleteFeedback(suggestionID));
+      dispatch(hideEditFeedbackPage());
+      if (pageBeforeSuggestionDetails === "suggestionsPage") {
+        dispatch(showSuggestionsPage());
+      } else {
+        dispatch(showRoadmapPage());
+      }
     }
 
     if (event.target.textContent === "Cancel") {
@@ -165,6 +174,33 @@ function AddEditFeedback(props) {
     setCategory("Feature");
     setComment("");
   }
+
+  useEffect(() => {
+    function closeCategoryMenu(event) {
+      if (
+        !event.target.closest(".btn-feedback-category") &&
+        !event.target.closest(".category-menu")
+      ) {
+        setShowCategories(false);
+      }
+    }
+    document.addEventListener("click", closeCategoryMenu);
+
+    function closeStatusMenu(event) {
+      if (
+        !event.target.closest(".btn-feedback-status") &&
+        !event.target.closest(".category-menu")
+      ) {
+        setShowStatusMenu(false);
+      }
+    }
+    document.addEventListener("click", closeStatusMenu);
+
+    return () => {
+      document.removeEventListener("click", closeCategoryMenu);
+      document.removeEventListener("click", closeStatusMenu);
+    };
+  }, []);
 
   return (
     <div className="create-feedback-box">

@@ -103,6 +103,21 @@ function SuggestionsPage() {
     dispatch(filterData());
   }, [keyword, sortCategory]);
 
+  useEffect(() => {
+    function closeSortMenu(event) {
+      if (
+        !event.target.closest(".sort-box") &&
+        !event.target.closest(".sort-menu")
+      ) {
+        setShowSortMenu(false);
+      }
+    }
+
+    document.addEventListener("click", closeSortMenu);
+
+    return () => document.removeEventListener("click", closeSortMenu);
+  }, []);
+
   return (
     <div className="suggestions-page">
       <header>

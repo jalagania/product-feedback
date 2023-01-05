@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import roadmapPageSlice from "../store/roadmapPageSlice";
 import suggestionDetailsSlice from "../store/suggestionDetailsSlice";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
+import dataSlice from "../store/dataSlice";
 
 function Suggestion(props) {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function Suggestion(props) {
     getSuggestionDetailsID,
     setPageBeforeSuggestionDetails,
   } = suggestionDetailsSlice.actions;
+  const { upvote } = dataSlice.actions;
   const { hideRoadmapPage } = roadmapPageSlice.actions;
 
   const suggestion = props.suggestion;
@@ -28,7 +30,7 @@ function Suggestion(props) {
   const commentAmount = comments + replies;
 
   function handleUpvote() {
-    console.log("voted");
+    dispatch(upvote(suggestion.id));
   }
 
   function handleSuggestionBox(event) {
@@ -50,7 +52,12 @@ function Suggestion(props) {
       className={`suggestion-box ${props.name} ${props.class ? "hover" : ""}`}
       onClick={handleSuggestionBox}
     >
-      <button className="suggestion-upvote" onClick={handleUpvote}>
+      <button
+        className={`suggestion-upvote ${
+          suggestion.upvoted === true ? "upvoted" : ""
+        }`}
+        onClick={handleUpvote}
+      >
         <svg
           className="upvote-icon"
           width="10"

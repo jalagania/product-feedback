@@ -68,10 +68,6 @@ a:visited {
   transform: rotate(180deg);
 }
 
-.selected {
-  color: var(--blue);
-}
-
 .invisible {
   visibility: hidden;
 }
