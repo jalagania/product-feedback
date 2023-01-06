@@ -136,7 +136,7 @@ function SuggestionsPage() {
     setSortedData(suggestions);
     sortSuggestions();
     filterSuggestions();
-  }, [appData, keyword, sortCategory]);
+  }, [appData, keyword, sortCategory, suggestions.length]);
 
   useEffect(() => {
     function closeSortMenu(event) {
