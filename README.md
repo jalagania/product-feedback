@@ -8,5 +8,5 @@
 
 - HTML5
 - CSS (Flexbox, CSS Grid, CSS custom properties)
-- React
+- React/Redux Toolkit
 - JSON
