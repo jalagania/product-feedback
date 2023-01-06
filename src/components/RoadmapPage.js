@@ -86,17 +86,16 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
+            .filter((suggestion) => suggestion === "planned")
             .map((suggestion) => {
-              if (suggestion.status === "planned") {
-                return (
-                  <Suggestion
-                    key={suggestion.id}
-                    name="roadmap"
-                    class="hover"
-                    suggestion={suggestion}
-                  />
-                );
-              }
+              return (
+                <Suggestion
+                  key={suggestion.id}
+                  name="roadmap"
+                  class="hover"
+                  suggestion={suggestion}
+                />
+              );
             })}
         </div>
         <div
@@ -111,17 +110,16 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
+            .filter((suggestion) => suggestion === "in-progress")
             .map((suggestion) => {
-              if (suggestion.status === "in-progress") {
-                return (
-                  <Suggestion
-                    key={suggestion.id}
-                    name="roadmap"
-                    class="hover"
-                    suggestion={suggestion}
-                  />
-                );
-              }
+              return (
+                <Suggestion
+                  key={suggestion.id}
+                  name="roadmap"
+                  class="hover"
+                  suggestion={suggestion}
+                />
+              );
             })}
         </div>
         <div
@@ -134,17 +132,16 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
+            .filter((suggestion) => suggestion === "live")
             .map((suggestion) => {
-              if (suggestion.status === "live") {
-                return (
-                  <Suggestion
-                    key={suggestion.id}
-                    name="roadmap"
-                    class="hover"
-                    suggestion={suggestion}
-                  />
-                );
-              }
+              return (
+                <Suggestion
+                  key={suggestion.id}
+                  name="roadmap"
+                  class="hover"
+                  suggestion={suggestion}
+                />
+              );
             })}
         </div>
       </div>
