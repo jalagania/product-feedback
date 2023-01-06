@@ -86,7 +86,7 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
-            .filter((suggestion) => suggestion === "planned")
+            .filter((suggestion) => suggestion.status === "planned")
             .map((suggestion) => {
               return (
                 <Suggestion
@@ -110,7 +110,7 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
-            .filter((suggestion) => suggestion === "in-progress")
+            .filter((suggestion) => suggestion.status === "in-progress")
             .map((suggestion) => {
               return (
                 <Suggestion
@@ -132,7 +132,7 @@ function RoadmapPage() {
           {productRequests
             .slice()
             .sort((a, b) => b.upvotes - a.upvotes)
-            .filter((suggestion) => suggestion === "live")
+            .filter((suggestion) => suggestion.status === "live")
             .map((suggestion) => {
               return (
                 <Suggestion
