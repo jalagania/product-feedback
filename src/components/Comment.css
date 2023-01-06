@@ -43,10 +43,6 @@
   transition: all 0.2s;
 }
 
-.btn-reply:hover {
-  text-decoration: underline;
-}
-
 .content {
   font-size: 1.5rem;
   line-height: 2.2rem;
@@ -90,4 +86,21 @@
 
 .reply-input:focus {
   outline: 1px solid var(--blue);
+}
+
+@media (hover: hover) {
+  .btn-reply:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 425px) {
+  .comment-box {
+    gap: 1.6rem;
+  }
+
+  .content {
+    font-size: 1.3rem;
+    margin-left: -5.5rem;
+  }
 }

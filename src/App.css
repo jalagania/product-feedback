@@ -9,3 +9,9 @@
   align-items: flex-start;
   gap: 3rem;
 }
+
+@media (max-width: 425px) {
+  .container {
+    padding: 0;
+  }
+}

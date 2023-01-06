@@ -75,3 +75,25 @@
   line-height: 2.2rem;
   color: var(--gray-dark);
 }
+
+@media (max-width: 425px) {
+  .suggestion-details-container {
+    padding: 2.4rem;
+  }
+
+  .buttons-box {
+    margin-bottom: 0;
+  }
+
+  .comments-container {
+    padding: 2.4rem 2.4rem 1.6rem 2.4rem;
+  }
+
+  .characters-amount {
+    font-size: 1.3rem;
+  }
+
+  .add-comment-box {
+    padding: 2.4rem;
+  }
+}

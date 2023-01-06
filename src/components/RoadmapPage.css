@@ -59,3 +59,41 @@
   line-height: 2.3rem;
   color: var(--gray-dark);
 }
+
+@media (max-width: 768px) {
+  .roadmap-body {
+    gap: 1rem;
+  }
+
+  .title-box h3,
+  .title-box p {
+    font-size: 1.4rem;
+  }
+
+  .planned-box,
+  .in-progress-box,
+  .live-box {
+    gap: 1.6rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .roadmap-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .roadmap-header {
+    padding: 2.4rem;
+    border-radius: 0;
+  }
+
+  .roadmap-body {
+    margin: 0;
+    padding: 2.4rem;
+    grid-template-columns: 1fr;
+  }
+
+  .title-box h3 {
+    font-size: 1.8rem;
+  }
+}

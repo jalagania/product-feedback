@@ -143,10 +143,6 @@ textarea:focus {
   justify-content: space-between;
 }
 
-.category-menu li:hover {
-  color: var(--violet);
-}
-
 .category-menu li:not(:last-child) {
   border-bottom: 1px solid rgba(58, 67, 116, 0.15);
 }
@@ -168,4 +164,39 @@ textarea:focus {
 
 .error-text {
   color: var(--red);
+}
+
+@media (hover: hover) {
+  .category-menu li:hover {
+    color: var(--violet);
+  }
+}
+
+@media (max-width: 425px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .create-feedback-box {
+    padding: 2.4rem;
+  }
+
+  .new-feedback-icon {
+    margin-top: -5rem;
+  }
+
+  input,
+  textarea,
+  .btn-feedback-category,
+  .btn-feedback-status {
+    padding: 1.3rem 1.6rem;
+  }
+
+  .feedback-buttons-box {
+    flex-direction: column-reverse;
+  }
+
+  .feedback-buttons-box button:first-of-type {
+    margin-right: 0;
+  }
 }

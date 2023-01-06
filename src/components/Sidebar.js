@@ -1,4 +1,5 @@
 import "./Sidebar.css";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import suggestionsPageSlice from "../store/suggestionsPageSlice";
 import roadmapPageSlice from "../store/roadmapPageSlice";
@@ -8,6 +9,8 @@ function Sidebar() {
   const { appData } = useSelector((store) => store.data);
   const { setKeyword } = suggestionsPageSlice.actions;
   const { keyword } = useSelector((store) => store.suggestionsPage);
+
+  const [showMenu, setShowMenu] = useState(false);
 
   const { hideSuggestionsPage } = suggestionsPageSlice.actions;
   const { showRoadmapPage } = roadmapPageSlice.actions;
@@ -31,71 +34,116 @@ function Sidebar() {
     dispatch(showRoadmapPage());
   }
 
+  function handleMenuIcon() {
+    setShowMenu(true);
+  }
+
+  function handleCloseIcon() {
+    setShowMenu(false);
+  }
+
   return (
-    <div className="sidebar-box">
-      <div className="logo-box">
-        <p className="logo-text">Frontend Mentor</p>
-        <p className="logo-subtext">Feedback Board</p>
-      </div>
-      <div className="keywords-box">
+    <div className="sidebar-wrapper">
+      <div className="logo-box-mobile">
+        <div className="logo-text-wrapper">
+          <p className="logo-text">Frontend Mentor</p>
+          <p className="logo-subtext">Feedback Board</p>
+        </div>
         <button
-          className={`keyword ${keyword === "All" ? "selected" : ""}`}
-          onClick={handleKeyword}
+          className={`btn-menu ${showMenu ? "hidden" : ""}`}
+          onClick={handleMenuIcon}
         >
-          All
+          <img
+            src={
+              process.env.PUBLIC_URL +
+              "./assets/shared/mobile/icon-hamburger.svg"
+            }
+            alt="menu"
+            className="menu-icon"
+          />
         </button>
         <button
-          className={`keyword ${keyword === "UI" ? "selected" : ""}`}
-          onClick={handleKeyword}
+          className={`btn-close-menu ${showMenu ? "" : "hidden"}`}
+          onClick={handleCloseIcon}
         >
-          UI
-        </button>
-        <button
-          className={`keyword ${keyword === "UX" ? "selected" : ""}`}
-          onClick={handleKeyword}
-        >
-          UX
-        </button>
-        <button
-          className={`keyword ${keyword === "Enhancement" ? "selected" : ""}`}
-          onClick={handleKeyword}
-        >
-          Enhancement
-        </button>
-        <button
-          className={`keyword ${keyword === "Bug" ? "selected" : ""}`}
-          onClick={handleKeyword}
-        >
-          Bug
-        </button>
-        <button
-          className={`keyword ${keyword === "Feature" ? "selected" : ""}`}
-          onClick={handleKeyword}
-        >
-          Feature
+          <img
+            src={
+              process.env.PUBLIC_URL + "./assets/shared/mobile/icon-close.svg"
+            }
+            alt="close icon"
+            className="close-icon"
+          />
         </button>
       </div>
-      <div className="roadmap-box">
-        <div className="roadmap-title-box">
-          <p className="title">Roadmap</p>
-          <button className="view" onClick={handleViewButton}>
-            View
+      <div
+        className={`sidebar-menu-bg ${showMenu ? "" : "hidden"}`}
+        onClick={handleCloseIcon}
+      ></div>
+      <div className={`sidebar-box ${showMenu ? "left" : ""}`}>
+        <div className="logo-box">
+          <p className="logo-text">Frontend Mentor</p>
+          <p className="logo-subtext">Feedback Board</p>
+        </div>
+        <div className="keywords-box">
+          <button
+            className={`keyword ${keyword === "All" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            All
+          </button>
+          <button
+            className={`keyword ${keyword === "UI" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            UI
+          </button>
+          <button
+            className={`keyword ${keyword === "UX" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            UX
+          </button>
+          <button
+            className={`keyword ${keyword === "Enhancement" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            Enhancement
+          </button>
+          <button
+            className={`keyword ${keyword === "Bug" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            Bug
+          </button>
+          <button
+            className={`keyword ${keyword === "Feature" ? "selected" : ""}`}
+            onClick={handleKeyword}
+          >
+            Feature
           </button>
         </div>
-        <ul className="roadmap-list">
-          <li className="planned">
-            <p className="item-name">Planned</p>
-            <p className="item-amount">{planned}</p>
-          </li>
-          <li className="in-progress">
-            <p className="item-name">In-Progress</p>
-            <p className="item-amount">{progress}</p>
-          </li>
-          <li className="live">
-            <p className="item-name">Live</p>
-            <p className="item-amount">{live}</p>
-          </li>
-        </ul>
+        <div className="roadmap-box">
+          <div className="roadmap-title-box">
+            <p className="title">Roadmap</p>
+            <button className="view" onClick={handleViewButton}>
+              View
+            </button>
+          </div>
+          <ul className="roadmap-list">
+            <li className="planned">
+              <p className="item-name">Planned</p>
+              <p className="item-amount">{planned}</p>
+            </li>
+            <li className="in-progress">
+              <p className="item-name">In-Progress</p>
+              <p className="item-amount">{progress}</p>
+            </li>
+            <li className="live">
+              <p className="item-name">Live</p>
+              <p className="item-amount">{live}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

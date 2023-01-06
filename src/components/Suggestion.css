@@ -9,14 +9,6 @@
   gap: 4rem;
 }
 
-.suggestion-box.hover {
-  cursor: pointer;
-}
-
-.suggestion-box.hover:hover .suggestion-title {
-  color: var(--blue);
-}
-
 .suggestion-box.roadmap {
   border-radius: 0.5rem;
   gap: 0;
@@ -61,10 +53,6 @@
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
-}
-
-.suggestion-upvote:hover {
-  background-color: var(--gray-hover);
 }
 
 .upvote-icon {
@@ -150,4 +138,72 @@
 
 .upvoted svg {
   filter: brightness(3);
+}
+
+@media (hover: hover) {
+  .suggestion-box.hover {
+    cursor: pointer;
+  }
+
+  .suggestion-box.hover:hover .suggestion-title {
+    color: var(--blue);
+  }
+
+  .suggestion-upvote:hover {
+    background-color: var(--gray-hover);
+  }
+}
+
+@media (max-width: 768px) {
+  .suggestion-box {
+    padding: 2.4rem 2rem;
+  }
+
+  .suggestion-box.roadmap {
+    row-gap: 2.2rem;
+  }
+
+  .suggestion-box.roadmap .suggestion-title {
+    font-size: 1.3rem;
+  }
+
+  .suggestion-box.roadmap .suggestion-description {
+    font-size: 1.3rem;
+    margin: 0.5rem 0 2.2rem 0;
+  }
+}
+
+@media (max-width: 425px) {
+  .suggestion-box {
+    border-radius: 0.5rem;
+    gap: 0;
+    row-gap: 1.6rem;
+  }
+
+  .suggestion-text-box {
+    grid-column: 1/-1;
+  }
+
+  .suggestion-upvote {
+    width: 7rem;
+    flex-direction: row;
+    grid-row: 2;
+  }
+
+  .suggestion-comments {
+    grid-column: 3;
+  }
+
+  .suggestion-title {
+    font-size: 1.3rem;
+  }
+
+  .suggestion-description {
+    font-size: 1.3rem;
+    margin: 0.5rem 0 1.2rem 0;
+  }
+
+  .suggestion-status-roadmap {
+    font-size: 1.3rem;
+  }
 }

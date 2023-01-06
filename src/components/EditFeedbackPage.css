@@ -2,3 +2,9 @@
   max-width: 54rem;
   margin: auto;
 }
+
+@media (max-width: 425px) {
+  .edit-feedback-container {
+    padding: 2.4rem;
+  }
+}

@@ -1,5 +1,8 @@
-.sidebar-box {
+.sidebar-wrapper {
   max-width: 25rem;
+}
+
+.sidebar-box {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
@@ -11,12 +14,24 @@
 }
 
 .logo-box {
+  height: 14rem;
   background-image: radial-gradient(
     128.88% 128.88% at 103.9% -10.39%,
     #e84d70 0%,
     #a337f6 53.09%,
     #28a7ed 100%
   );
+
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-box-mobile {
+  display: none;
+}
+
+.logo-text-wrapper {
+  margin-top: auto;
 }
 
 .logo-text {
@@ -24,8 +39,8 @@
   font-weight: 700;
   line-height: 3rem;
   letter-spacing: -0.25px;
-  margin-top: 4rem;
   color: white;
+  margin-top: auto;
 }
 
 .logo-subtext {
@@ -33,6 +48,10 @@
   font-size: 1.5rem;
   line-height: 2.2rem;
   color: rgba(255, 255, 255, 0.75);
+}
+
+.menu-icon {
+  display: none;
 }
 
 .keywords-box {
@@ -52,10 +71,6 @@
   border-radius: 1rem;
   transition: all 0.2s;
   cursor: pointer;
-}
-
-.keyword:hover {
-  background-color: var(--gray-hover);
 }
 
 .roadmap-box {
@@ -84,10 +99,6 @@
   background-color: transparent;
   cursor: pointer;
   transition: all 0.2s;
-}
-
-.view:hover {
-  color: var(--blue-hover);
 }
 
 .roadmap-list {
@@ -135,4 +146,100 @@
 .selected {
   color: white;
   background-color: var(--blue);
+}
+
+@media (hover: hover) {
+  .keyword:hover {
+    background-color: var(--gray-hover);
+  }
+
+  .view:hover {
+    color: var(--blue-hover);
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-box {
+    max-width: 100%;
+    flex-direction: row;
+  }
+
+  .sidebar-box > div {
+    width: 33.3%;
+  }
+
+  .logo-box {
+    height: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .sidebar-box {
+    width: 75%;
+    height: 100%;
+    padding: 2.4rem;
+    background-color: var(--gray-light);
+    flex-direction: column;
+    position: absolute;
+    top: 10rem;
+    left: 100%;
+    z-index: 10;
+    transition: all 0.3s;
+  }
+
+  .sidebar-menu-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 10rem;
+    left: 0;
+    z-index: 10;
+  }
+
+  .sidebar-box > div {
+    width: 100%;
+  }
+
+  .logo-box {
+    display: none;
+  }
+
+  .logo-box-mobile {
+    width: 100%;
+    padding: 2.4rem;
+    background-image: radial-gradient(
+      128.88% 128.88% at 103.9% -10.39%,
+      #e84d70 0%,
+      #a337f6 53.09%,
+      #28a7ed 100%
+    );
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .logo-subtext {
+    font-size: 1.3rem;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .sort-box {
+    font-size: 1.3rem;
+  }
+}
+
+.left {
+  left: 25%;
 }

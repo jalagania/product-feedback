@@ -9,6 +9,14 @@
   gap: 1rem;
 }
 
-.btn-go-back:hover span {
-  text-decoration: underline;
+@media (hover: hover) {
+  .btn-go-back:hover span {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 425px) {
+  .btn-go-back {
+    font-size: 1.3rem;
+  }
 }

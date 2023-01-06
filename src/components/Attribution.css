@@ -11,8 +11,10 @@ a:visited {
   color: #26c0ab;
 }
 
-.attribution a:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .attribution a:hover {
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 768px) {
