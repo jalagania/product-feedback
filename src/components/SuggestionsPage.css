@@ -154,7 +154,6 @@ header {
     border-radius: 0;
 
     gap: 0;
-    justify-content: space-between;
   }
 
   .suggestions-container {
