@@ -15,7 +15,9 @@ function SuggestionsPage() {
     )
   );
   const { hideSuggestionsPage } = suggestionsPageSlice.actions;
-  const { keyword } = useSelector((store) => store.suggestionsPage);
+  const { keyword, suggestionsPageVisible } = useSelector(
+    (store) => store.suggestionsPage
+  );
   const { showAddFeedbackPage, setPageBeforeAddFeedback } =
     addFeedbackSlice.actions;
 
@@ -136,7 +138,7 @@ function SuggestionsPage() {
     setSortedData(suggestions);
     sortSuggestions();
     filterSuggestions();
-  }, [appData, keyword, sortCategory]);
+  }, [appData, keyword, sortCategory, suggestionsPageVisible]);
 
   useEffect(() => {
     function closeSortMenu(event) {
