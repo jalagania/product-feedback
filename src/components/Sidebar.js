@@ -44,7 +44,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar-wrapper">
-      <div className="logo-box-mobile">
+      <div className={`logo-box-mobile ${showMenu ? "fixed" : ""}`}>
         <div className="logo-text-wrapper">
           <p className="logo-text">Frontend Mentor</p>
           <p className="logo-subtext">Feedback Board</p>

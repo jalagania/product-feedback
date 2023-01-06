@@ -14,13 +14,8 @@
 }
 
 .logo-box {
-  height: 14rem;
-  background-image: radial-gradient(
-    128.88% 128.88% at 103.9% -10.39%,
-    #e84d70 0%,
-    #a337f6 53.09%,
-    #28a7ed 100%
-  );
+  height: 13.7rem;
+  background-image: url(/public/assets/suggestions/desktop/background-header.png);
 
   display: flex;
   flex-direction: column;
@@ -159,6 +154,10 @@
 }
 
 @media (max-width: 768px) {
+  .sidebar-wrapper {
+    max-width: unset;
+  }
+
   .sidebar-box {
     max-width: 100%;
     flex-direction: row;
@@ -170,6 +169,8 @@
 
   .logo-box {
     height: auto;
+    background-image: url(/public/assets/suggestions/tablet/background-header.png);
+    background-size: cover;
   }
 }
 
@@ -180,7 +181,7 @@
     padding: 2.4rem;
     background-color: var(--gray-light);
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 10rem;
     left: 100%;
     z-index: 10;
@@ -191,7 +192,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
+    position: fixed;
     top: 10rem;
     left: 0;
     z-index: 10;
@@ -208,15 +209,12 @@
   .logo-box-mobile {
     width: 100%;
     padding: 2.4rem;
-    background-image: radial-gradient(
-      128.88% 128.88% at 103.9% -10.39%,
-      #e84d70 0%,
-      #a337f6 53.09%,
-      #28a7ed 100%
-    );
+    background-image: url(/public/assets/suggestions/mobile/background-header.png);
+    background-size: cover;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
 
     display: flex;
     align-items: center;
@@ -242,4 +240,8 @@
 
 .left {
   left: 25%;
+}
+
+.fixed {
+  position: fixed;
 }
