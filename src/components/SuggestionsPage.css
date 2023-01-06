@@ -152,6 +152,9 @@ header {
     padding: 1.5rem 2.4rem;
     margin-bottom: 1rem;
     border-radius: 0;
+
+    gap: 0;
+    justify-content: space-between;
   }
 
   .suggestions-container {
