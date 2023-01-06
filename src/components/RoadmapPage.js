@@ -1,4 +1,5 @@
 import "./RoadmapPage.css";
+import { useState } from "react";
 import ButtonGoBack from "./ButtonGoBack";
 import ButtonWithBackground from "./ButtonWithBackground";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +25,8 @@ function RoadmapPage() {
   const { showAddFeedbackPage, setPageBeforeAddFeedback } =
     addFeedbackSlice.actions;
 
+  const [selectedStatus, setSelectedStatus] = useState("planned");
+
   function handleGoBack() {
     dispatch(hideRoadmapPage());
     dispatch(showSuggestionsPage());
@@ -48,8 +51,34 @@ function RoadmapPage() {
           handleButton={handleAddFeedback}
         />
       </div>
+      <div className="roadmap-subheader">
+        <h4
+          className={selectedStatus === "planned" ? "selected-status" : "faded"}
+          onClick={() => setSelectedStatus("planned")}
+        >
+          Planned ({planned})
+        </h4>
+        <h4
+          className={
+            selectedStatus === "in-progress" ? "selected-status" : "faded"
+          }
+          onClick={() => setSelectedStatus("in-progress")}
+        >
+          In-Progress ({progress})
+        </h4>
+        <h4
+          className={selectedStatus === "live" ? "selected-status" : "faded"}
+          onClick={() => setSelectedStatus("live")}
+        >
+          Live ({live})
+        </h4>
+      </div>
       <div className="roadmap-body">
-        <div className="planned-box">
+        <div
+          className={`planned-box ${
+            selectedStatus === "planned" ? "visible" : ""
+          }`}
+        >
           <div className="title-box">
             <h3>Planned ({planned})</h3>
             <p>Ideas prioritized for research</p>
@@ -70,7 +99,11 @@ function RoadmapPage() {
               }
             })}
         </div>
-        <div className="in-progress-box">
+        <div
+          className={`in-progress-box ${
+            selectedStatus === "in-progress" ? "visible" : ""
+          }`}
+        >
           <div className="title-box">
             <h3>In-Progress ({progress})</h3>
             <p>Currently being developed</p>
@@ -91,7 +124,9 @@ function RoadmapPage() {
               }
             })}
         </div>
-        <div className="live-box">
+        <div
+          className={`live-box ${selectedStatus === "live" ? "visible" : ""}`}
+        >
           <div className="title-box">
             <h3>Live ({live})</h3>
             <p>Released features</p>
