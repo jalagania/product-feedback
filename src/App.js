@@ -7,6 +7,7 @@ import SuggestionDetailsPage from "./components/SuggestionDetailsPage";
 import AddFeedbackPage from "./components/AddFeedbackPage";
 import EditFeedbackPage from "./components/EditFeedbackPage";
 import RoadmapPage from "./components/RoadmapPage";
+import Attribution from "./components/Attribution";
 
 function App() {
   const { suggestionsPageVisible } = useSelector(
@@ -45,6 +46,7 @@ function App() {
       {suggestionDetailsPageVisible && <SuggestionDetailsPage />}
       {editFeedbackPageVisible && <EditFeedbackPage />}
       {roadmapPageVisible && <RoadmapPage />}
+      <Attribution />
     </div>
   );
 }

@@ -1,14 +1,15 @@
 .attribution {
   font-size: 1.6rem;
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
-  color: #00494d;
+  color: var(--navy);
+  margin-top: 3rem;
 }
 
 .attribution a:link,
 a:visited {
   text-decoration: none;
-  color: #26c0ab;
+  color: var(--violet);
 }
 
 @media (hover: hover) {
@@ -25,6 +26,6 @@ a:visited {
 
 @media (max-width: 425px) {
   .attribution {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 }
