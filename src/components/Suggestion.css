@@ -187,8 +187,7 @@
   .suggestion-upvote {
     width: 7rem;
     flex-direction: row;
-    justify-content: space-around;
-    gap: 0;
+    justify-content: space-evenly;
     grid-row: 2;
   }
 
