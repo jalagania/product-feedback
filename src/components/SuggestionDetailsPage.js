@@ -63,8 +63,7 @@ function SuggestionDetailsPage() {
     }
   }
 
-  function handleCommentSubmit(event) {
-    event.preventDefault();
+  function handleCommentSubmit() {
     if (commentInput !== "") {
       const id =
         suggestion.comments.length > 0
@@ -88,7 +87,7 @@ function SuggestionDetailsPage() {
         event.key === "Enter" &&
         !event.shiftKey
       ) {
-        handleCommentSubmit(event);
+        handleCommentSubmit();
       }
     }
     document.addEventListener("keydown", handleEnterPress);
@@ -132,7 +131,13 @@ function SuggestionDetailsPage() {
           })}
         </div>
       )}
-      <form className="add-comment-box" onSubmit={handleCommentSubmit}>
+      <form
+        className="add-comment-box"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleCommentSubmit();
+        }}
+      >
         <h3>Add Comment</h3>
         <textarea
           className="comment-input"
@@ -143,7 +148,7 @@ function SuggestionDetailsPage() {
         ></textarea>
         <div className="button-box">
           <p className="characters-amount">
-            <span className="amount">{charactersLeft} </span> Characters left
+            <span className="amount">{charactersLeft} </span>Characters left
           </p>
           <ButtonWithBackground name="Post Comment" class="post-comment" />
         </div>
