@@ -1,5 +1,6 @@
 .comment-box {
   margin-bottom: 3.2rem;
+  position: relative;
 
   display: flex;
   align-items: flex-start;
@@ -9,6 +10,16 @@
 .comment-box img {
   width: 4rem;
   border-radius: 50%;
+}
+
+.replies-border {
+  width: 1px;
+  height: 0;
+  background-color: rgba(100, 113, 150, 0.1);
+
+  position: absolute;
+  top: 6rem;
+  left: 2rem;
 }
 
 .comment-details {
@@ -99,6 +110,11 @@
     gap: 1.6rem;
   }
 
+  .replies-border {
+    top: 122%;
+    left: 0;
+  }
+
   .content {
     font-size: 1.3rem;
     margin-left: -5.5rem;
@@ -107,5 +123,9 @@
   .reply-input-box {
     flex-direction: column;
     align-items: flex-end;
+  }
+
+  .reply-input {
+    padding: 1.5rem;
   }
 }

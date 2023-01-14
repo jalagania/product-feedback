@@ -11,11 +11,16 @@ function Comment(props) {
   const { suggestionID } = useSelector((store) => store.suggestionDetails);
 
   const textareaRef = useRef();
+  const commentBoxRef = useRef();
+  const repliesBorderRef = useRef();
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyInput, setReplyInput] = useState("");
+  const [repliesBorder, setRepliesBorder] = useState(0);
 
   function handleReplyInput(event) {
-    setReplyInput(event.target.value);
+    if (event.target.value.length <= 250) {
+      setReplyInput(event.target.value);
+    }
   }
 
   function handleReplyButton() {
@@ -39,9 +44,32 @@ function Comment(props) {
     textareaRef.current?.focus();
   }, [showReplyInput]);
 
+  useEffect(() => {
+    if (props.comment.replies) {
+      setRepliesBorder(
+        commentBoxRef.current.parentElement.lastElementChild.getBoundingClientRect()
+          .top -
+          repliesBorderRef.current.getBoundingClientRect().top +
+          20
+      );
+    } else {
+      setRepliesBorder(0);
+    }
+  }, [props.comment.replies]);
+
   return (
-    <div className={`comment-box ${props.class ? "reply" : ""}`}>
+    <div
+      className={`comment-box ${props.class ? "reply" : ""}`}
+      ref={commentBoxRef}
+    >
       <img src={props.comment.user.image} alt="user" />
+      {props.class !== "reply" && (
+        <div
+          className="replies-border"
+          style={{ height: repliesBorder + "px" }}
+          ref={repliesBorderRef}
+        ></div>
+      )}
       <div className="comment-details">
         <div className="user-info">
           <div className="user-credentials">

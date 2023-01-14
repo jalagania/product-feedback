@@ -114,7 +114,7 @@ function SuggestionDetailsPage() {
           </h3>
           {suggestion.comments.map((comment) => {
             return (
-              <div key={comment.id}>
+              <div className="comment-reply-wrapper" key={comment.id}>
                 <Comment comment={comment} id={comment.id} />
                 {comment.replies?.map((reply, index) => {
                   return (
