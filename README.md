@@ -2,7 +2,7 @@
 
 ### Links
 
-- Live Site URL:
+- Live Site URL: https://product-feedback-beka.netlify.app
 
 ### Built with
 
